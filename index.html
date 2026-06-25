@@ -1,358 +1,555 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Frame a Frame — Animação, IA e Criatividade</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frame a Frame — Animação, IA e Criatividade</title>
+
+  <!-- Importa as fontes do Google: Space Grotesk para títulos, Inter para textos -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap">
+
+  <!-- Arquivo de estilos principal -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- Notification bar -->
-<div class="notif-bar" id="notifBar">
-  🎬 Bem-vindo ao Frame a Frame! Compartilhe sua arte, shorts de IA e projetos de animação.
-  <button class="notif-close" onclick="document.getElementById('notifBar').remove()">✕</button>
-</div>
-
-<!-- Header -->
-<header>
-  <a class="logo" href="#">
-    <div class="logo-icon">🎞</div>
-    Frame a Frame <span>·</span>
-  </a>
-
-  <nav>
-    <a href="#" class="active">🏠 Início</a>
-    <a href="#">🎨 Animação</a>
-    <a href="#">🤖 IA Generativa</a>
-    <a href="#">✨ Criatividade</a>
-    <a href="#">🎬 Shorts</a>
-    <a href="#">💡 Tutoriais</a>
-    <a href="#">🔥 Trending</a>
-  </nav>
-
-  <div class="search-wrap">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <circle cx="11" cy="11" r="8"/>
-      <path d="m21 21-4.35-4.35"/>
-    </svg>
-    <input id="search" type="text" placeholder="Buscar no Frame a Frame…">
+  <!-- ══════════════════════════════════════════
+       BARRA DE NOTIFICAÇÃO (topo da página)
+       Aparece antes do header com um aviso de boas-vindas.
+       O botão ✕ remove ela da tela via JavaScript.
+  ══════════════════════════════════════════ -->
+  <div class="notif-bar" id="notifBar">
+    🎬 Bem-vindo ao Frame a Frame! Compartilhe sua arte, shorts de IA e projetos de animação.
+    <button class="notif-close" onclick="document.getElementById('notifBar').remove()">✕</button>
   </div>
 
-  <div class="header-right">
-    <button class="btn-login">Entrar</button>
-    <button class="btn-post">+ Postar</button>
-  </div>
-</header>
+  <!-- ══════════════════════════════════════════
+       HEADER — barra de navegação principal
+       Fica fixo no topo enquanto o usuário rola a página.
+       Contém: logo, navegação, busca e botões de ação.
+  ══════════════════════════════════════════ -->
+  <header>
 
-<!-- Main layout -->
-<div class="layout">
+    <!-- Logo clicável que leva à página inicial -->
+    <a class="logo" href="#">
+      <div class="logo-icon">🎞</div>
+      Frame a Frame <span>·</span>
+    </a>
 
-  <!-- Sidebar esquerda -->
-  <aside class="sidebar-left">
-    <div class="sidebar-section-label">Feeds</div>
-    <a class="sidebar-link active"><span class="icon">🏠</span> Início</a>
-    <a class="sidebar-link"><span class="icon">🔥</span> Popular</a>
-    <a class="sidebar-link"><span class="icon">✨</span> Novidades</a>
-    <a class="sidebar-link"><span class="icon">🏆</span> Melhores</a>
+    <!-- Menu de categorias horizontais -->
+    <nav>
+      <a href="#" class="active">🏠 Início</a>
+      <a href="#">🎨 Animação</a>
+      <a href="#">🤖 IA Generativa</a>
+      <a href="#">✨ Criatividade</a>
+      <a href="#">🎬 Shorts</a>
+      <a href="#">💡 Tutoriais</a>
+      <a href="#">🔥 Trending</a>
+    </nav>
 
-    <div class="sidebar-section-label">Categorias</div>
-    <a class="sidebar-link"><span class="icon">🎨</span> Animação 2D</a>
-    <a class="sidebar-link"><span class="icon">🧊</span> 3D & Motion</a>
-    <a class="sidebar-link"><span class="icon">🤖</span> IA Generativa</a>
-    <a class="sidebar-link"><span class="icon">📽</span> Stop Motion</a>
-    <a class="sidebar-link"><span class="icon">🎭</span> Character Design</a>
-    <a class="sidebar-link"><span class="icon">💡</span> Tutoriais</a>
-    <a class="sidebar-link"><span class="icon">🛠</span> Ferramentas</a>
-
-    <div class="sidebar-section-label">Comunidade</div>
-    <a class="sidebar-link"><span class="icon">📣</span> Comunidade</a>
-    <a class="sidebar-link"><span class="icon">⚙️</span> Preferências</a>
-  </aside>
-
-  <!-- Feed -->
-  <main>
-    <div class="feed-tabs">
-      <button class="tab active">🔥 Em Alta</button>
-      <button class="tab">✨ Novos</button>
-      <button class="tab">🏆 Melhores</button>
-      <button class="tab">📣 Comunidade</button>
+    <!-- Campo de busca com ícone de lupa -->
+    <div class="search-wrap">
+      <!-- Ícone SVG de lupa (posicionado dentro do input via CSS) -->
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input id="search" type="text" placeholder="Buscar no Frame a Frame…">
     </div>
 
-    <!-- Post 1 — vídeo -->
-    <div class="post-card">
-      <div class="vote-col">
-        <button class="vote-btn up">▲</button>
-        <span class="vote-count">2400</span>
-        <button class="vote-btn down">▼</button>
-      </div>
-      <div class="post-body">
-        <div class="post-meta">
-          <div class="avatar-sm" style="background:#3d1a6e;">🎨</div>
-          <span class="community">f/animacao2d</span> · postado por <strong>u/marinacriativa</strong> · 3h atrás
-        </div>
-        <div class="post-title">Meu primeiro curta animado feito completamente em Blender — 3 meses de trabalho!</div>
-        <div class="tags">
-          <span class="tag">🎬 Blender</span>
-          <span class="tag">✨ 3D</span>
-          <span class="tag green">✅ OC</span>
-        </div>
-        <div class="video-thumb">
-          <div class="play-btn"></div>
-        </div>
-        <div class="post-text">
-          Finalmente terminei! Esse projeto começou como um exercício de modelagem e virou um curta de 2 minutos sobre uma robozinha que aprende a dançar.
-          Usei Blender 4.2, Grease Pencil para os efeitos 2D e Krita para as texturas pintadas à mão.
-        </div>
-        <div class="post-actions">
-          <button class="action-btn">💬 347 comentários</button>
-          <button class="action-btn">🔗 Compartilhar</button>
-          <button class="action-btn">⭐ Salvar</button>
-          <button class="action-btn">··· Mais</button>
-        </div>
-      </div>
+    <!-- Botões do lado direito do header -->
+    <div class="header-right">
+      <!-- Abre o modal de login/cadastro -->
+      <button class="btn-login" id="btnLogin">Entrar</button>
+      <!-- Abre o modal de criação de post (exige login) -->
+      <button class="btn-post" id="btnPostar">+ Postar</button>
     </div>
 
-    <!-- Post 2 — imagem -->
-    <div class="post-card">
-      <div class="vote-col">
-        <button class="vote-btn up">▲</button>
-        <span class="vote-count">1100</span>
-        <button class="vote-btn down">▼</button>
-      </div>
-      <div class="post-body">
-        <div class="post-meta">
-          <div class="avatar-sm" style="background:#1a3a6e;">🤖</div>
-          <span class="community">f/ia_generativa</span> · postado por <strong>u/pixel_dreamer</strong> · 5h atrás
-        </div>
-        <div class="post-title">Fiz um workflow no ComfyUI pra gerar personagens animados consistentes — compartilhando grátis!</div>
-        <div class="tags">
-          <span class="tag">🤖 ComfyUI</span>
-          <span class="tag">🎭 Character</span>
-          <span class="tag gold">⭐ Destaque</span>
-        </div>
-        <div class="post-image-placeholder">
-          <span style="font-size:40px;">🎭</span>
-          <span>Personagens gerados com IA — 4 variações</span>
-        </div>
-        <div class="post-text">
-          Depois de semanas testando, consegui criar um pipeline estável que mantém o estilo e proporções do personagem consistentes entre frames.
-          Compartilhei o workflow no link abaixo — funciona com SDXL e Flux.
-        </div>
-        <div class="post-actions">
-          <button class="action-btn">💬 212 comentários</button>
-          <button class="action-btn">🔗 Compartilhar</button>
-          <button class="action-btn">⭐ Salvar</button>
-          <button class="action-btn">··· Mais</button>
-        </div>
-      </div>
-    </div>
+  </header><!-- fim header -->
 
-    <!-- Post 3 — discussão -->
-    <div class="post-card">
-      <div class="vote-col">
-        <button class="vote-btn up">▲</button>
-        <span class="vote-count">876</span>
-        <button class="vote-btn down">▼</button>
-      </div>
-      <div class="post-body">
-        <div class="post-meta">
-          <div class="avatar-sm" style="background:#1a4a2e;">💬</div>
-          <span class="community">f/criatividade</span> · postado por <strong>u/teoriadaanimacao</strong> · 8h atrás
-        </div>
-        <div class="post-title">A IA vai substituir animadores? Minha visão depois de 10 anos na área</div>
-        <div class="tags">
-          <span class="tag">💬 Discussão</span>
-          <span class="tag">🤖 IA</span>
-          <span class="tag">🎨 Indústria</span>
-        </div>
-        <div class="post-text">
-          Curto e grosso: não, pelo menos não da forma que todo mundo está com medo. A IA está mudando o que animadores fazem, não eliminando o papel deles.
-          A criatividade, o senso narrativo, a direção artística — isso continua sendo humano. O que muda é o pipeline técnico...
-        </div>
-        <div class="post-actions">
-          <button class="action-btn">💬 589 comentários</button>
-          <button class="action-btn">🔗 Compartilhar</button>
-          <button class="action-btn">⭐ Salvar</button>
-          <button class="action-btn">··· Mais</button>
-        </div>
-      </div>
-    </div>
 
-    <!-- Post 4 — tutorial -->
-    <div class="post-card">
-      <div class="vote-col">
-        <button class="vote-btn up">▲</button>
-        <span class="vote-count">654</span>
-        <button class="vote-btn down">▼</button>
-      </div>
-      <div class="post-body">
-        <div class="post-meta">
-          <div class="avatar-sm" style="background:#4e1a1a;">📚</div>
-          <span class="community">f/tutoriais</span> · postado por <strong>u/animadorderua</strong> · 12h atrás
-        </div>
-        <div class="post-title">[Tutorial] Princípios de squash & stretch com exemplos práticos no After Effects</div>
-        <div class="tags">
-          <span class="tag">📚 Tutorial</span>
-          <span class="tag">🎬 After Effects</span>
-          <span class="tag green">✅ Iniciante</span>
-        </div>
-        <div class="video-thumb" style="height:160px;">
-          <div class="play-btn"></div>
-        </div>
-        <div class="post-text">
-          Squash e stretch é o primeiro princípio da animação da Disney e o mais ignorado por iniciantes.
-          Nesse tutorial de 18 minutos cubro desde o básico até aplicações avançadas.
-        </div>
-        <div class="post-actions">
-          <button class="action-btn">💬 98 comentários</button>
-          <button class="action-btn">🔗 Compartilhar</button>
-          <button class="action-btn">⭐ Salvar</button>
-          <button class="action-btn">··· Mais</button>
-        </div>
-      </div>
-    </div>
+  <!-- ══════════════════════════════════════════
+       LAYOUT PRINCIPAL — grade de 3 colunas:
+       [sidebar esquerda] [feed central] [sidebar direita]
+  ══════════════════════════════════════════ -->
+  <div class="layout">
 
-    <!-- Post 5 -->
-    <div class="post-card">
-      <div class="vote-col">
-        <button class="vote-btn up">▲</button>
-        <span class="vote-count">441</span>
-        <button class="vote-btn down">▼</button>
+
+    <!-- ──────────────────────────────────────
+         SIDEBAR ESQUERDA — navegação lateral
+         Fica fixo enquanto o usuário rola o feed.
+         Some em telas menores que 1000px.
+    ────────────────────────────────────────── -->
+    <aside class="sidebar-left">
+
+      <div class="sidebar-section-label">Feeds</div>
+      <a class="sidebar-link active"><span class="icon">🏠</span> Início</a>
+      <a class="sidebar-link"><span class="icon">🔥</span> Popular</a>
+      <a class="sidebar-link"><span class="icon">✨</span> Novidades</a>
+      <a class="sidebar-link"><span class="icon">🏆</span> Melhores</a>
+
+      <div class="sidebar-section-label">Categorias</div>
+      <a class="sidebar-link"><span class="icon">🎨</span> Animação 2D</a>
+      <a class="sidebar-link"><span class="icon">🧊</span> 3D & Motion</a>
+      <a class="sidebar-link"><span class="icon">🤖</span> IA Generativa</a>
+      <a class="sidebar-link"><span class="icon">📽</span> Stop Motion</a>
+      <a class="sidebar-link"><span class="icon">🎭</span> Character Design</a>
+      <a class="sidebar-link"><span class="icon">💡</span> Tutoriais</a>
+      <a class="sidebar-link"><span class="icon">🛠</span> Ferramentas</a>
+
+      <div class="sidebar-section-label">Comunidade</div>
+      <a class="sidebar-link"><span class="icon">📣</span> Comunidade</a>
+      <a class="sidebar-link"><span class="icon">⚙️</span> Preferências</a>
+
+    </aside><!-- fim sidebar-left -->
+
+
+    <!-- ──────────────────────────────────────
+         FEED CENTRAL — lista de postagens
+    ────────────────────────────────────────── -->
+    <main>
+
+      <!-- Tabs de ordenação do feed -->
+      <div class="feed-tabs">
+        <button class="tab active">🔥 Em Alta</button>
+        <button class="tab">✨ Novos</button>
+        <button class="tab">🏆 Melhores</button>
+        <button class="tab">📣 Comunidade</button>
       </div>
-      <div class="post-body">
-        <div class="post-meta">
-          <div class="avatar-sm" style="background:#2a1a50;">🛠</div>
-          <span class="community">f/ferramentas</span> · postado por <strong>u/techartbr</strong> · 1d atrás
-        </div>
-        <div class="post-title">Kling AI vs Runway Gen-4 vs Pika 2.0 — comparei os três gerando a mesma cena</div>
-        <div class="tags">
-          <span class="tag">🤖 Kling</span>
-          <span class="tag">🤖 Runway</span>
-          <span class="tag">🤖 Pika</span>
-          <span class="tag gold">⭐ Análise</span>
-        </div>
-        <div class="post-text">
-          Peguei o mesmo prompt descrevendo uma cena de perseguição urbana noturna e rodei nos três modelos mais recentes.
-          Resumo: Kling ganhou em movimentação de câmera, Runway em coerência temporal, Pika em estilo.
-        </div>
-        <div class="post-actions">
-          <button class="action-btn">💬 203 comentários</button>
-          <button class="action-btn">🔗 Compartilhar</button>
-          <button class="action-btn">⭐ Salvar</button>
-          <button class="action-btn">··· Mais</button>
-        </div>
-      </div>
-    </div>
 
-  </main>
+      <!-- ════════════════════════
+           POST 1 — com vídeo
+      ════════════════════════ -->
+      <div class="post-card" id="post-1">
 
-  <!-- Sidebar direita -->
-  <aside class="sidebar-right">
+        <!-- Coluna de votos (upvote / contagem / downvote) -->
+        <div class="vote-col">
+          <button class="vote-btn up" title="Upvote">▲</button>
+          <span class="vote-count">2400</span>
+          <button class="vote-btn down" title="Downvote">▼</button>
+        </div>
 
-    <div class="widget">
-      <div class="community-banner"></div>
-      <div class="community-body">
-        <h3>🎞 Frame a Frame</h3>
-        <p>O lar dos criadores de animação, artistas de IA e mentes criativas do Brasil.</p>
-        <div class="community-stats">
-          <div class="stat">
-            <div class="stat-val">48.3k</div>
-            <div class="stat-label">membros</div>
+        <!-- Corpo principal do post -->
+        <div class="post-body">
+
+          <!-- Metadados: comunidade, autor e tempo -->
+          <div class="post-meta">
+            <div class="avatar-sm" style="background:#3d1a6e;">🎨</div>
+            <span class="community">f/animacao2d</span>
+            · postado por <strong>u/marinacriativa</strong> · 3h atrás
           </div>
-          <div class="stat">
-            <div class="stat-val"><span class="dot-online"></span>312</div>
-            <div class="stat-label">online agora</div>
+
+          <!-- Título clicável do post -->
+          <div class="post-title">
+            Meu primeiro curta animado feito completamente em Blender — 3 meses de trabalho!
+          </div>
+
+          <!-- Tags/categorias do post -->
+          <div class="tags">
+            <span class="tag">🎬 Blender</span>
+            <span class="tag">✨ 3D</span>
+            <span class="tag green">✅ OC</span><!-- OC = Original Content (conteúdo próprio) -->
+          </div>
+
+          <!-- Miniatura de vídeo (clicável — abre player simulado) -->
+          <div class="video-thumb" title="Assistir vídeo">
+            <div class="play-btn"></div><!-- Botão de play estilizado via CSS -->
+          </div>
+
+          <!-- Texto/descrição do post -->
+          <div class="post-text">
+            Finalmente terminei! Esse projeto começou como um exercício de modelagem e virou
+            um curta de 2 minutos sobre uma robozinha que aprende a dançar.
+            Usei Blender 4.2, Grease Pencil para os efeitos 2D e Krita para as texturas pintadas à mão.
+          </div>
+
+          <!-- Área de reações com emojis (estilo Facebook) -->
+          <div class="reacoes-wrap" data-post="post-1"></div>
+
+          <!-- Botões de ação do post -->
+          <div class="post-actions">
+            <button class="action-btn btn-comentar" data-target="post-1">💬 <span class="num-comentarios">347</span> comentários</button>
+            <button class="action-btn btn-compartilhar">🔗 Compartilhar</button>
+            <button class="action-btn btn-salvar">⭐ Salvar</button>
+          </div>
+
+          <!-- Seção de comentários (começa oculta, abre ao clicar em "comentários") -->
+          <div class="secao-comentarios" id="comentarios-post-1" style="display:none;"></div>
+
+        </div><!-- fim post-body -->
+      </div><!-- fim post-card 1 -->
+
+
+      <!-- ════════════════════════
+           POST 2 — com imagem
+      ════════════════════════ -->
+      <div class="post-card" id="post-2">
+        <div class="vote-col">
+          <button class="vote-btn up" title="Upvote">▲</button>
+          <span class="vote-count">1100</span>
+          <button class="vote-btn down" title="Downvote">▼</button>
+        </div>
+        <div class="post-body">
+          <div class="post-meta">
+            <div class="avatar-sm" style="background:#1a3a6e;">🤖</div>
+            <span class="community">f/ia_generativa</span>
+            · postado por <strong>u/pixel_dreamer</strong> · 5h atrás
+          </div>
+          <div class="post-title">
+            Fiz um workflow no ComfyUI pra gerar personagens animados consistentes — compartilhando grátis!
+          </div>
+          <div class="tags">
+            <span class="tag">🤖 ComfyUI</span>
+            <span class="tag">🎭 Character</span>
+            <span class="tag gold">⭐ Destaque</span>
+          </div>
+          <!-- Placeholder de imagem (substitui img real) -->
+          <div class="post-image-placeholder">
+            <span style="font-size:40px;">🎭</span>
+            <span>Personagens gerados com IA — 4 variações</span>
+          </div>
+          <div class="post-text">
+            Depois de semanas testando, consegui criar um pipeline estável que mantém o estilo
+            e proporções do personagem consistentes entre frames.
+            Funciona com SDXL e Flux.
+          </div>
+          <div class="reacoes-wrap" data-post="post-2"></div>
+          <div class="post-actions">
+            <button class="action-btn btn-comentar" data-target="post-2">💬 <span class="num-comentarios">212</span> comentários</button>
+            <button class="action-btn btn-compartilhar">🔗 Compartilhar</button>
+            <button class="action-btn btn-salvar">⭐ Salvar</button>
+          </div>
+          <div class="secao-comentarios" id="comentarios-post-2" style="display:none;"></div>
+        </div>
+      </div><!-- fim post-card 2 -->
+
+
+      <!-- ════════════════════════
+           POST 3 — discussão (só texto)
+      ════════════════════════ -->
+      <div class="post-card" id="post-3">
+        <div class="vote-col">
+          <button class="vote-btn up" title="Upvote">▲</button>
+          <span class="vote-count">876</span>
+          <button class="vote-btn down" title="Downvote">▼</button>
+        </div>
+        <div class="post-body">
+          <div class="post-meta">
+            <div class="avatar-sm" style="background:#1a4a2e;">💬</div>
+            <span class="community">f/criatividade</span>
+            · postado por <strong>u/teoriadaanimacao</strong> · 8h atrás
+          </div>
+          <div class="post-title">A IA vai substituir animadores? Minha visão depois de 10 anos na área</div>
+          <div class="tags">
+            <span class="tag">💬 Discussão</span>
+            <span class="tag">🤖 IA</span>
+            <span class="tag">🎨 Indústria</span>
+          </div>
+          <div class="post-text">
+            Curto e grosso: não, pelo menos não da forma que todo mundo está com medo.
+            A IA está mudando o que animadores fazem, não eliminando o papel deles.
+            A criatividade, o senso narrativo, a direção artística — isso continua sendo humano.
+          </div>
+          <div class="reacoes-wrap" data-post="post-3"></div>
+          <div class="post-actions">
+            <button class="action-btn btn-comentar" data-target="post-3">💬 <span class="num-comentarios">589</span> comentários</button>
+            <button class="action-btn btn-compartilhar">🔗 Compartilhar</button>
+            <button class="action-btn btn-salvar">⭐ Salvar</button>
+          </div>
+          <div class="secao-comentarios" id="comentarios-post-3" style="display:none;"></div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════
+           POST 4 — tutorial com vídeo
+      ════════════════════════ -->
+      <div class="post-card" id="post-4">
+        <div class="vote-col">
+          <button class="vote-btn up" title="Upvote">▲</button>
+          <span class="vote-count">654</span>
+          <button class="vote-btn down" title="Downvote">▼</button>
+        </div>
+        <div class="post-body">
+          <div class="post-meta">
+            <div class="avatar-sm" style="background:#4e1a1a;">📚</div>
+            <span class="community">f/tutoriais</span>
+            · postado por <strong>u/animadorderua</strong> · 12h atrás
+          </div>
+          <div class="post-title">[Tutorial] Princípios de squash & stretch com exemplos práticos no After Effects</div>
+          <div class="tags">
+            <span class="tag">📚 Tutorial</span>
+            <span class="tag">🎬 After Effects</span>
+            <span class="tag green">✅ Iniciante</span>
+          </div>
+          <div class="video-thumb" style="height:160px;" title="Assistir tutorial">
+            <div class="play-btn"></div>
+          </div>
+          <div class="post-text">
+            Squash e stretch é o primeiro princípio da animação da Disney e o mais ignorado
+            por iniciantes. Tutorial de 18 minutos cobrindo do básico ao avançado.
+          </div>
+          <div class="reacoes-wrap" data-post="post-4"></div>
+          <div class="post-actions">
+            <button class="action-btn btn-comentar" data-target="post-4">💬 <span class="num-comentarios">98</span> comentários</button>
+            <button class="action-btn btn-compartilhar">🔗 Compartilhar</button>
+            <button class="action-btn btn-salvar">⭐ Salvar</button>
+          </div>
+          <div class="secao-comentarios" id="comentarios-post-4" style="display:none;"></div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════
+           POST 5 — análise/comparativo
+      ════════════════════════ -->
+      <div class="post-card" id="post-5">
+        <div class="vote-col">
+          <button class="vote-btn up" title="Upvote">▲</button>
+          <span class="vote-count">441</span>
+          <button class="vote-btn down" title="Downvote">▼</button>
+        </div>
+        <div class="post-body">
+          <div class="post-meta">
+            <div class="avatar-sm" style="background:#2a1a50;">🛠</div>
+            <span class="community">f/ferramentas</span>
+            · postado por <strong>u/techartbr</strong> · 1d atrás
+          </div>
+          <div class="post-title">Kling AI vs Runway Gen-4 vs Pika 2.0 — comparei os três gerando a mesma cena</div>
+          <div class="tags">
+            <span class="tag">🤖 Kling</span>
+            <span class="tag">🤖 Runway</span>
+            <span class="tag">🤖 Pika</span>
+            <span class="tag gold">⭐ Análise</span>
+          </div>
+          <div class="post-text">
+            Mesmo prompt, três modelos diferentes. Resultado: Kling ganhou em movimentação
+            de câmera, Runway em coerência temporal, Pika em estilo visual.
+          </div>
+          <div class="reacoes-wrap" data-post="post-5"></div>
+          <div class="post-actions">
+            <button class="action-btn btn-comentar" data-target="post-5">💬 <span class="num-comentarios">203</span> comentários</button>
+            <button class="action-btn btn-compartilhar">🔗 Compartilhar</button>
+            <button class="action-btn btn-salvar">⭐ Salvar</button>
+          </div>
+          <div class="secao-comentarios" id="comentarios-post-5" style="display:none;"></div>
+        </div>
+      </div>
+
+    </main><!-- fim feed central -->
+
+
+    <!-- ──────────────────────────────────────
+         SIDEBAR DIREITA — widgets informativos
+         Fica fixo enquanto o usuário rola o feed.
+         Some em telas menores que 700px.
+    ────────────────────────────────────────── -->
+    <aside class="sidebar-right">
+
+      <!-- Widget: informações da comunidade -->
+      <div class="widget">
+        <div class="community-banner"></div><!-- Faixa colorida decorativa no topo -->
+        <div class="community-body">
+          <h3>🎞 Frame a Frame</h3>
+          <p>O lar dos criadores de animação, artistas de IA e mentes criativas do Brasil.</p>
+          <div class="community-stats">
+            <div class="stat">
+              <div class="stat-val">48.3k</div>
+              <div class="stat-label">membros</div>
+            </div>
+            <div class="stat">
+              <!-- Ponto verde indica usuários online no momento -->
+              <div class="stat-val"><span class="dot-online"></span>312</div>
+              <div class="stat-label">online agora</div>
+            </div>
+          </div>
+          <!-- Botão para entrar na comunidade (exige login) -->
+          <button class="btn-join" id="btnJoin">Entrar na Comunidade</button>
+        </div>
+      </div>
+
+      <!-- Widget: posts em destaque da semana -->
+      <div class="widget">
+        <div class="widget-header">⭐ Em Destaque</div>
+        <div class="featured-card">
+          <div class="feat-rank">1</div>
+          <div class="feat-thumb">🎬</div>
+          <div class="feat-info">
+            <div class="feat-title">Curta animado "Robozinha" — Making Of completo</div>
+            <div class="feat-meta">por u/marinacriativa</div>
+          </div>
+          <div class="feat-votes">↑ 2.4k</div>
+        </div>
+        <div class="featured-card">
+          <div class="feat-rank">2</div>
+          <div class="feat-thumb">🤖</div>
+          <div class="feat-info">
+            <div class="feat-title">Workflow ComfyUI para personagens consistentes</div>
+            <div class="feat-meta">por u/pixel_dreamer</div>
+          </div>
+          <div class="feat-votes">↑ 1.1k</div>
+        </div>
+        <div class="featured-card">
+          <div class="feat-rank">3</div>
+          <div class="feat-thumb">💬</div>
+          <div class="feat-info">
+            <div class="feat-title">IA vai substituir animadores? Minha visão</div>
+            <div class="feat-meta">por u/teoriadaanimacao</div>
+          </div>
+          <div class="feat-votes">↑ 876</div>
+        </div>
+      </div>
+
+      <!-- Widget: notícias recentes do mundo da animação e IA -->
+      <div class="widget">
+        <div class="widget-header">📰 Notícias</div>
+        <div class="news-item">
+          <div class="news-num">1</div>
+          <div>
+            <div class="news-title">Adobe lança Firefly Video para animadores independentes</div>
+            <div class="news-sub">2h atrás · 89 comentários</div>
           </div>
         </div>
-        <button class="btn-join">Entrar na Comunidade</button>
+        <div class="news-item">
+          <div class="news-num">2</div>
+          <div>
+            <div class="news-title">Sora ganha nova versão com controle frame-a-frame</div>
+            <div class="news-sub">5h atrás · 231 comentários</div>
+          </div>
+        </div>
+        <div class="news-item">
+          <div class="news-num">3</div>
+          <div>
+            <div class="news-title">Studio Ghibli anuncia parceria com escola brasileira</div>
+            <div class="news-sub">1d atrás · 445 comentários</div>
+          </div>
+        </div>
+        <div class="news-item">
+          <div class="news-num">4</div>
+          <div>
+            <div class="news-title">Blender 5.0 beta — novidades para animação 2D</div>
+            <div class="news-sub">2d atrás · 178 comentários</div>
+          </div>
+        </div>
+        <div class="news-item">
+          <div class="news-num">5</div>
+          <div>
+            <div class="news-title">Kling AI ultrapassa 10M de usuários em 6 meses</div>
+            <div class="news-sub">3d atrás · 93 comentários</div>
+          </div>
+        </div>
       </div>
+
+      <!-- Widget: regras da comunidade -->
+      <div class="widget">
+        <div class="widget-header">📋 Regras</div>
+        <div class="rules-body">
+          <strong>1.</strong> Seja respeitoso com todos os criadores<br>
+          <strong>2.</strong> Dê crédito a fontes e inspirações<br>
+          <strong>3.</strong> Marque seus posts com as tags certas<br>
+          <strong>4.</strong> Sem spam ou autopromoção excessiva<br>
+          <strong>5.</strong> OC = conteúdo original seu ✅
+        </div>
+      </div>
+
+    </aside><!-- fim sidebar-right -->
+
+  </div><!-- fim layout -->
+
+
+  <!-- ══════════════════════════════════════════
+       MODAL DE LOGIN / CADASTRO
+       Aparece quando o usuário clica em "Entrar"
+       ou tenta fazer algo que exige conta.
+       O overlay escuro atrás fecha o modal ao clicar.
+  ══════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-auth" style="display:none;">
+    <div class="modal-box">
+
+      <!-- Botão de fechar (X) no canto superior direito -->
+      <button class="modal-close" onclick="fecharModal('modal-auth')">✕</button>
+
+      <div class="modal-logo">🎞</div>
+      <h2 class="modal-title">Entrar no Frame a Frame</h2>
+      <p class="modal-sub">Escolha como quer acessar sua conta</p>
+
+      <!-- Opção 1: login simulado com Google -->
+      <button class="btn-google" id="btnGoogle">
+        <svg width="18" height="18" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        Continuar com Google
+      </button>
+
+      <!-- Divisor visual entre opções -->
+      <div class="modal-divider"><span>ou</span></div>
+
+      <!-- Abas para alternar entre Login e Cadastro -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="trocarAba('login')">Entrar</button>
+        <button class="auth-tab" onclick="trocarAba('cadastro')">Criar conta</button>
+      </div>
+
+      <!-- Formulário de LOGIN com email/senha -->
+      <div id="form-login">
+        <input class="modal-input" type="email" id="input-email" placeholder="Seu e-mail">
+        <input class="modal-input" type="password" id="input-senha" placeholder="Sua senha">
+        <button class="btn-confirmar" id="btnEntrarEmail">Entrar</button>
+      </div>
+
+      <!-- Formulário de CADASTRO (oculto por padrão) -->
+      <div id="form-cadastro" style="display:none;">
+        <input class="modal-input" type="text" id="cad-nome" placeholder="Seu nome de usuário">
+        <input class="modal-input" type="email" id="cad-email" placeholder="Seu e-mail ou Gmail">
+        <input class="modal-input" type="tel" id="cad-tel" placeholder="Ou número de telefone (+55...)">
+        <input class="modal-input" type="password" id="cad-senha" placeholder="Crie uma senha">
+        <button class="btn-confirmar" id="btnCadastrar">Criar minha conta</button>
+      </div>
+
     </div>
+  </div><!-- fim modal-auth -->
 
-    <div class="widget">
-      <div class="widget-header">⭐ Em Destaque</div>
-      <div class="featured-card">
-        <div class="feat-rank">1</div>
-        <div class="feat-thumb">🎬</div>
-        <div class="feat-info">
-          <div class="feat-title">Curta animado "Robozinha" — Making Of completo</div>
-          <div class="feat-meta">por u/marinacriativa</div>
-        </div>
-        <div class="feat-votes">↑ 2.4k</div>
-      </div>
-      <div class="featured-card">
-        <div class="feat-rank">2</div>
-        <div class="feat-thumb">🤖</div>
-        <div class="feat-info">
-          <div class="feat-title">Workflow ComfyUI para personagens consistentes</div>
-          <div class="feat-meta">por u/pixel_dreamer</div>
-        </div>
-        <div class="feat-votes">↑ 1.1k</div>
-      </div>
-      <div class="featured-card">
-        <div class="feat-rank">3</div>
-        <div class="feat-thumb">💬</div>
-        <div class="feat-info">
-          <div class="feat-title">IA vai substituir animadores? Minha visão</div>
-          <div class="feat-meta">por u/teoriadaanimacao</div>
-        </div>
-        <div class="feat-votes">↑ 876</div>
-      </div>
+
+  <!-- ══════════════════════════════════════════
+       MODAL DE CRIAR POST
+       Aparece quando o usuário logado clica em "+ Postar".
+       Permite escrever título, legenda, escolher imagem
+       e adicionar uma música (nome do track).
+  ══════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-post" style="display:none;">
+    <div class="modal-box" style="max-width:560px;">
+
+      <button class="modal-close" onclick="fecharModal('modal-post')">✕</button>
+      <h2 class="modal-title">✏️ Criar nova postagem</h2>
+
+      <!-- Campo: título obrigatório -->
+      <input class="modal-input" type="text" id="post-titulo" placeholder="Título do post (obrigatório)">
+
+      <!-- Campo: legenda/descrição opcional -->
+      <textarea class="modal-input modal-textarea" id="post-legenda" placeholder="Escreva uma legenda ou descrição…" rows="4"></textarea>
+
+      <!-- Área de upload de imagem da galeria -->
+      <label class="upload-area" id="upload-label" for="post-imagem">
+        <span id="upload-texto">📁 Clique para escolher uma imagem da galeria</span>
+        <!-- Preview da imagem escolhida (oculto até selecionar) -->
+        <img id="upload-preview" src="" alt="" style="display:none; max-height:180px; border-radius:8px; margin-top:10px;">
+      </label>
+      <!-- Input de arquivo oculto (ativado pelo clique no label acima) -->
+      <input type="file" id="post-imagem" accept="image/*" style="display:none;">
+
+      <!-- Campo opcional: nome de uma música para associar ao post -->
+      <input class="modal-input" type="text" id="post-musica" placeholder="🎵 Música (ex: Lofi Study Beat — Artista)">
+
+      <!-- Botão de publicar -->
+      <button class="btn-confirmar" id="btnPublicar">🚀 Publicar post</button>
+
     </div>
+  </div><!-- fim modal-post -->
 
-    <div class="widget">
-      <div class="widget-header">📰 Notícias</div>
-      <div class="news-item">
-        <div class="news-num">1</div>
-        <div>
-          <div class="news-title">Adobe lança Firefly Video para animadores independentes</div>
-          <div class="news-sub">2h atrás · 89 comentários</div>
-        </div>
-      </div>
-      <div class="news-item">
-        <div class="news-num">2</div>
-        <div>
-          <div class="news-title">Sora ganha nova versão com controle frame-a-frame</div>
-          <div class="news-sub">5h atrás · 231 comentários</div>
-        </div>
-      </div>
-      <div class="news-item">
-        <div class="news-num">3</div>
-        <div>
-          <div class="news-title">Studio Ghibli anuncia parceria com escola brasileira de animação</div>
-          <div class="news-sub">1d atrás · 445 comentários</div>
-        </div>
-      </div>
-      <div class="news-item">
-        <div class="news-num">4</div>
-        <div>
-          <div class="news-title">Blender 5.0 beta — novidades para animação 2D</div>
-          <div class="news-sub">2d atrás · 178 comentários</div>
-        </div>
-      </div>
-      <div class="news-item">
-        <div class="news-num">5</div>
-        <div>
-          <div class="news-title">Kling AI ultrapassa 10M de usuários em 6 meses</div>
-          <div class="news-sub">3d atrás · 93 comentários</div>
-        </div>
-      </div>
-    </div>
 
-    <div class="widget">
-      <div class="widget-header">📋 Regras</div>
-      <div class="rules-body">
-        <strong>1.</strong> Seja respeitoso com todos os criadores<br>
-        <strong>2.</strong> Dê crédito a fontes e inspirações<br>
-        <strong>3.</strong> Marque seus posts com as tags certas<br>
-        <strong>4.</strong> Sem spam ou autopromoção excessiva<br>
-        <strong>5.</strong> OC = conteúdo original seu ✅
-      </div>
-    </div>
+  <!-- Arquivo JavaScript com toda a lógica interativa -->
+  <script src="script.js"></script>
 
-  </aside>
-</div>
-
-<script src="script.js"></script>
 </body>
 </html>

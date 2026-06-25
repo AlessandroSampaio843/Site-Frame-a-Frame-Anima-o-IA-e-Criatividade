@@ -1,21 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+/* ══════════════════════════════════════════════
+   FRAME A FRAME — style.css
+   Organização:
+   1. Variáveis globais (cores, fontes, tamanhos)
+   2. Reset e base
+   3. Barra de notificação
+   4. Header
+   5. Layout principal (grid de 3 colunas)
+   6. Sidebar esquerda
+   7. Feed central (tabs, post cards, votos, etc.)
+   8. Sidebar direita (widgets)
+   9. Modais (auth e post)
+   10. Comentários e reações
+   11. Responsividade
+══════════════════════════════════════════════ */
 
+
+/* ── 1. VARIÁVEIS GLOBAIS ──────────────────── */
 :root {
-  --bg:       #0f0f14;
-  --surface:  #1a1a24;
-  --card:     #22222f;
-  --border:   #2e2e42;
-  --accent:   #b44dff;
-  --accent2:  #7b2fff;
-  --gold:     #f5c842;
-  --green:    #3ddc84;
-  --text:     #e8e8f0;
-  --muted:    #8888a8;
-  --tag-bg:   #2a1a40;
-  --tag-text: #c980ff;
-  --radius:   10px;
+  --bg:       #0f0f14;   /* fundo geral da página */
+  --surface:  #1a1a24;   /* superfícies secundárias (header, vote col) */
+  --card:     #22222f;   /* fundo dos cards de post e widgets */
+  --border:   #2e2e42;   /* bordas e divisores */
+  --accent:   #b44dff;   /* cor principal (roxo vibrante) */
+  --accent2:  #7b2fff;   /* variante mais escura do roxo */
+  --gold:     #f5c842;   /* cor dourada para destaques */
+  --green:    #3ddc84;   /* cor verde para indicadores positivos */
+  --text:     #e8e8f0;   /* texto principal */
+  --muted:    #8888a8;   /* texto secundário / menos importante */
+  --tag-bg:   #2a1a40;   /* fundo das tags */
+  --tag-text: #c980ff;   /* texto das tags */
+  --radius:   10px;      /* borda arredondada padrão */
 }
 
+
+/* ── 2. RESET E BASE ──────────────────────── */
+/* Remove margin/padding padrão do navegador e garante box-sizing consistente */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -30,7 +49,9 @@ body {
   min-height: 100vh;
 }
 
-/* ── NOTIF BAR ── */
+
+/* ── 3. BARRA DE NOTIFICAÇÃO ──────────────── */
+/* Faixa roxa no topo com mensagem de boas-vindas */
 .notif-bar {
   background: linear-gradient(90deg, var(--accent2), var(--accent));
   text-align: center;
@@ -42,7 +63,7 @@ body {
   justify-content: center;
   gap: 10px;
 }
-.notif-bar a { color: #fff; text-decoration: underline; cursor: pointer; }
+/* Botão ✕ para fechar a barra */
 .notif-close {
   margin-left: auto;
   cursor: pointer;
@@ -51,15 +72,19 @@ body {
   background: none;
   border: none;
   color: #fff;
+  transition: opacity .15s;
 }
+.notif-close:hover { opacity: 1; }
 
-/* ── HEADER ── */
+
+/* ── 4. HEADER ────────────────────────────── */
+/* Barra de navegação fixa no topo */
 header {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
-  position: sticky;
+  position: sticky; /* fica fixo ao rolar */
   top: 0;
-  z-index: 100;
+  z-index: 100; /* fica acima do conteúdo */
   height: 52px;
   display: flex;
   align-items: center;
@@ -67,6 +92,7 @@ header {
   gap: 20px;
 }
 
+/* Logo: ícone + nome do site */
 .logo {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
@@ -78,9 +104,9 @@ header {
   gap: 8px;
   text-decoration: none;
 }
+/* Quadradinho roxo com o emoji do logo */
 .logo-icon {
-  width: 30px;
-  height: 30px;
+  width: 30px; height: 30px;
   background: linear-gradient(135deg, var(--accent), var(--accent2));
   border-radius: 8px;
   display: flex;
@@ -90,14 +116,15 @@ header {
 }
 .logo span { color: var(--accent); }
 
+/* Menu de navegação horizontal */
 nav {
   display: flex;
   gap: 4px;
-  flex: 1;
-  overflow-x: auto;
-  scrollbar-width: none;
+  flex: 1; /* ocupa o espaço disponível entre logo e busca */
+  overflow-x: auto; /* scroll horizontal em telas pequenas */
+  scrollbar-width: none; /* esconde scrollbar no Firefox */
 }
-nav::-webkit-scrollbar { display: none; }
+nav::-webkit-scrollbar { display: none; } /* esconde scrollbar no Chrome */
 
 nav a {
   color: var(--muted);
@@ -110,18 +137,21 @@ nav a {
   transition: all .15s;
 }
 nav a:hover { color: var(--text); background: var(--card); }
+/* Link ativo (página atual) */
 nav a.active { color: var(--accent); background: var(--tag-bg); }
 
+/* Campo de busca com ícone de lupa */
 .search-wrap {
   position: relative;
   display: flex;
   align-items: center;
 }
+/* Posiciona o SVG da lupa dentro do input */
 .search-wrap svg {
   position: absolute;
   left: 10px;
   color: var(--muted);
-  pointer-events: none;
+  pointer-events: none; /* não bloqueia cliques no input */
 }
 #search {
   background: var(--card);
@@ -129,11 +159,12 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   border-radius: 20px;
   color: var(--text);
   font-size: 13px;
-  padding: 7px 12px 7px 34px;
+  padding: 7px 12px 7px 34px; /* espaço à esquerda para a lupa */
   width: 220px;
   outline: none;
   transition: border-color .15s, width .2s;
 }
+/* Ao focar, borda roxa e input mais largo */
 #search:focus { border-color: var(--accent); width: 280px; }
 #search::placeholder { color: var(--muted); }
 
@@ -142,6 +173,8 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   align-items: center;
   gap: 10px;
 }
+
+/* Botão "Entrar" — borda sutil, fundo transparente */
 .btn-login {
   border: 1px solid var(--border);
   background: transparent;
@@ -156,6 +189,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 }
 .btn-login:hover { border-color: var(--accent); color: var(--accent); }
 
+/* Botão "+ Postar" — fundo roxo sólido */
 .btn-post {
   background: var(--accent);
   color: #fff;
@@ -170,7 +204,9 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 }
 .btn-post:hover { opacity: .85; }
 
-/* ── LAYOUT ── */
+
+/* ── 5. LAYOUT PRINCIPAL ──────────────────── */
+/* Grade de 3 colunas: sidebar | feed | sidebar */
 .layout {
   max-width: 1240px;
   margin: 0 auto;
@@ -178,18 +214,20 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   display: grid;
   grid-template-columns: 200px 1fr 300px;
   gap: 20px;
-  align-items: start;
+  align-items: start; /* sidebars não esticam até o fim */
 }
 
-/* ── SIDEBAR ESQUERDA ── */
+
+/* ── 6. SIDEBAR ESQUERDA ──────────────────── */
 .sidebar-left {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  position: sticky;
-  top: 72px;
+  position: sticky; /* fica fixo ao rolar */
+  top: 72px; /* abaixo do header */
 }
 
+/* Rótulo de seção (FEEDS, CATEGORIAS, etc.) */
 .sidebar-section-label {
   font-size: 10px;
   font-weight: 700;
@@ -199,6 +237,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   padding: 10px 10px 4px;
 }
 
+/* Item de link da sidebar */
 .sidebar-link {
   display: flex;
   align-items: center;
@@ -216,7 +255,10 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 .sidebar-link.active { background: var(--tag-bg); color: var(--accent); }
 .sidebar-link .icon { font-size: 16px; width: 20px; text-align: center; }
 
-/* ── FEED TABS ── */
+
+/* ── 7. FEED CENTRAL ──────────────────────── */
+
+/* Abas de ordenação (Em Alta / Novos / Melhores / Comunidade) */
 .feed-tabs {
   display: flex;
   gap: 4px;
@@ -237,7 +279,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 .tab:hover { color: var(--text); }
 .tab.active { background: var(--accent); color: #fff; }
 
-/* ── POST CARD ── */
+/* Card de post individual */
 .post-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -247,8 +289,10 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   overflow: hidden;
   transition: border-color .15s;
 }
+/* Borda roxa ao passar o mouse */
 .post-card:hover { border-color: var(--accent); }
 
+/* Coluna de votos (▲ número ▼) à esquerda do post */
 .vote-col {
   display: flex;
   flex-direction: column;
@@ -270,20 +314,23 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   line-height: 1;
 }
 .vote-btn:hover { background: var(--border); }
-.vote-btn.up:hover { color: var(--accent); }
+.vote-btn.up:hover   { color: var(--accent); }
 .vote-btn.down:hover { color: #f55; }
 .vote-count {
   font-size: 12px;
   font-weight: 700;
   color: var(--text);
+  transition: color .2s;
 }
 
+/* Corpo do post (título, texto, ações) */
 .post-body {
   flex: 1;
   padding: 12px 14px;
-  min-width: 0;
+  min-width: 0; /* evita estouro de conteúdo */
 }
 
+/* Linha com comunidade, autor e tempo */
 .post-meta {
   font-size: 11px;
   color: var(--muted);
@@ -293,6 +340,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   gap: 6px;
   flex-wrap: wrap;
 }
+/* Nome da comunidade clicável */
 .post-meta .community {
   color: var(--accent);
   font-weight: 600;
@@ -300,9 +348,9 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 }
 .post-meta .community:hover { text-decoration: underline; }
 
+/* Avatar circular pequeno do autor */
 .avatar-sm {
-  width: 20px;
-  height: 20px;
+  width: 20px; height: 20px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
@@ -312,6 +360,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   flex-shrink: 0;
 }
 
+/* Título principal do post */
 .post-title {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 16px;
@@ -320,9 +369,11 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   margin-bottom: 8px;
   line-height: 1.35;
   cursor: pointer;
+  transition: color .15s;
 }
 .post-title:hover { color: var(--accent); }
 
+/* Descrição/texto do post — limitado a 3 linhas */
 .post-text {
   font-size: 13px;
   color: var(--muted);
@@ -330,10 +381,12 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   margin-bottom: 10px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;  /* máximo 3 linhas visíveis */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
+/* Placeholder de imagem (quando não há imagem real) */
 .post-image-placeholder {
   width: 100%;
   height: 200px;
@@ -350,7 +403,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   gap: 8px;
 }
 
-/* ── TAGS ── */
+/* Tags coloridas (Blender, OC, Destaque, etc.) */
 .tags {
   display: flex;
   gap: 6px;
@@ -368,14 +421,18 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   transition: all .12s;
 }
 .tag:hover { background: var(--accent); color: #fff; }
+/* Variante verde (ex: OC, Iniciante) */
 .tag.green { background: #0f2a1a; color: var(--green); }
+/* Variante dourada (ex: Destaque, Análise) */
 .tag.gold  { background: #2a200a; color: var(--gold); }
 
-/* ── POST ACTIONS ── */
+/* Botões de ação abaixo do post */
 .post-actions {
   display: flex;
   gap: 4px;
   align-items: center;
+  flex-wrap: wrap;
+  margin-top: 8px;
 }
 .action-btn {
   background: none;
@@ -394,12 +451,11 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 }
 .action-btn:hover { background: var(--border); color: var(--text); }
 
-/* ── VIDEO THUMBNAIL ── */
+/* Miniatura de vídeo com botão de play */
 .video-thumb {
   position: relative;
   width: 100%;
   height: 200px;
-  background: #000;
   border-radius: 6px;
   margin-bottom: 10px;
   border: 1px solid var(--border);
@@ -409,27 +465,25 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   overflow: hidden;
   cursor: pointer;
 }
+/* Fundo escuro gradiente do vídeo */
 .video-thumb::before {
   content: '';
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background: linear-gradient(135deg, #1a0a2e, #0a0a1a);
 }
+/* Círculo roxo com triângulo de play */
 .play-btn {
   position: relative;
-  width: 52px;
-  height: 52px;
-  background: rgba(180, 77, 255, .85);
+  width: 52px; height: 52px;
+  background: rgba(180,77,255,.85);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform .15s, background .15s;
 }
-.video-thumb:hover .play-btn {
-  transform: scale(1.1);
-  background: var(--accent);
-}
+.video-thumb:hover .play-btn { transform: scale(1.1); background: var(--accent); }
+/* Triângulo do play usando border trick */
 .play-btn::after {
   content: '';
   border: 10px solid transparent;
@@ -437,21 +491,209 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   margin-left: 4px;
 }
 
-/* ── SIDEBAR DIREITA ── */
+/* Área de reações (emojis estilo Facebook) */
+.reacoes-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  min-height: 32px;
+}
+
+/* Botão de adicionar reação (fica oculto e aparece no hover do post) */
+.btn-reagir {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all .15s;
+  position: relative;
+}
+.btn-reagir:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Balão flutuante com os emojis disponíveis */
+.emoji-picker {
+  display: none; /* aparece via JS ao clicar */
+  position: absolute;
+  bottom: 38px;
+  left: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 6px 10px;
+  gap: 6px;
+  z-index: 50;
+  box-shadow: 0 4px 20px rgba(0,0,0,.4);
+  white-space: nowrap;
+}
+.emoji-picker.aberto { display: flex; }
+
+/* Cada emoji individual dentro do picker */
+.emoji-opt {
+  font-size: 22px;
+  cursor: pointer;
+  transition: transform .15s;
+  border-radius: 50%;
+  padding: 2px;
+  background: none;
+  border: none;
+  line-height: 1;
+}
+.emoji-opt:hover { transform: scale(1.4); }
+
+/* Bolha mostrando a reação já escolhida + contador */
+.reacao-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--tag-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .15s;
+  user-select: none;
+}
+.reacao-bubble:hover { border-color: var(--accent); }
+/* Quando o usuário já reagiu com esse emoji */
+.reacao-bubble.ativa {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.reacao-bubble .contagem {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ── SEÇÃO DE COMENTÁRIOS ──────────────────── */
+/* Aparece abaixo do post ao clicar em "comentários" */
+.secao-comentarios {
+  margin-top: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  animation: slideDown .2s ease; /* animação de entrada */
+}
+
+/* Animação de deslizar para baixo */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Área de escrever novo comentário */
+.comentario-input-wrap {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  align-items: flex-start;
+}
+/* Textarea do comentário */
+.comentario-textarea {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  padding: 8px 12px;
+  resize: none;
+  outline: none;
+  transition: border-color .15s;
+  min-height: 60px;
+}
+.comentario-textarea:focus { border-color: var(--accent); }
+.comentario-textarea::placeholder { color: var(--muted); }
+
+/* Botão de enviar o comentário */
+.btn-enviar-comentario {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: opacity .15s;
+  white-space: nowrap;
+}
+.btn-enviar-comentario:hover { opacity: .85; }
+
+/* Card individual de um comentário */
+.comentario-card {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  animation: slideDown .2s ease;
+}
+/* Avatar do autor do comentário */
+.comentario-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--accent2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.comentario-corpo {
+  flex: 1;
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+/* Nome do autor do comentário */
+.comentario-autor {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 3px;
+}
+/* Texto do comentário */
+.comentario-texto {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+}
+/* Aviso de comentário filtrado */
+.comentario-aviso {
+  font-size: 11px;
+  color: var(--gold);
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+
+/* ── 8. SIDEBAR DIREITA (WIDGETS) ─────────── */
 .sidebar-right {
   display: flex;
   flex-direction: column;
   gap: 14px;
   position: sticky;
-  top: 72px;
+  top: 72px; /* abaixo do header */
 }
 
+/* Container genérico de widget */
 .widget {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
 }
+/* Cabeçalho do widget com título */
 .widget-header {
   padding: 12px 14px;
   font-family: 'Space Grotesk', sans-serif;
@@ -459,12 +701,9 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   font-weight: 700;
   color: var(--text);
   border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
-/* ── COMMUNITY WIDGET ── */
+/* Faixa colorida decorativa no topo do widget de comunidade */
 .community-banner {
   height: 60px;
   background: linear-gradient(135deg, var(--accent2), var(--accent), #ff6ef5);
@@ -482,11 +721,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   line-height: 1.5;
   margin-bottom: 12px;
 }
-.community-stats {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 14px;
-}
+.community-stats { display: flex; gap: 16px; margin-bottom: 14px; }
 .stat { text-align: center; }
 .stat-val {
   font-size: 16px;
@@ -494,14 +729,17 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   font-family: 'Space Grotesk', sans-serif;
 }
 .stat-label { font-size: 11px; color: var(--muted); }
+
+/* Ponto verde "online agora" */
 .dot-online {
   display: inline-block;
-  width: 8px;
-  height: 8px;
+  width: 8px; height: 8px;
   background: var(--green);
   border-radius: 50%;
   margin-right: 4px;
 }
+
+/* Botão de entrar na comunidade */
 .btn-join {
   width: 100%;
   background: var(--accent);
@@ -517,7 +755,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 }
 .btn-join:hover { opacity: .85; }
 
-/* ── FEATURED ── */
+/* Cards de posts em destaque na sidebar */
 .featured-card {
   display: flex;
   align-items: center;
@@ -529,6 +767,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 }
 .featured-card:last-child { border-bottom: none; }
 .featured-card:hover { background: var(--surface); }
+/* Número de ranking (1, 2, 3...) */
 .feat-rank {
   font-size: 18px;
   font-weight: 800;
@@ -538,9 +777,9 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   text-align: center;
   flex-shrink: 0;
 }
+/* Miniatura do post em destaque */
 .feat-thumb {
-  width: 48px;
-  height: 36px;
+  width: 48px; height: 36px;
   border-radius: 4px;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -556,7 +795,8 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   font-weight: 600;
   color: var(--text);
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
+line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: 1.3;
@@ -571,7 +811,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   flex-shrink: 0;
 }
 
-/* ── NEWS ── */
+/* Itens de notícia na sidebar */
 .news-item {
   display: flex;
   gap: 10px;
@@ -583,6 +823,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 }
 .news-item:last-child { border-bottom: none; }
 .news-item:hover { background: var(--surface); }
+/* Número grande decorativo */
 .news-num {
   font-size: 20px;
   font-weight: 800;
@@ -591,15 +832,10 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   line-height: 1;
   flex-shrink: 0;
 }
-.news-title {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text);
-  line-height: 1.4;
-}
-.news-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.news-title { font-size: 12px; font-weight: 500; color: var(--text); line-height: 1.4; }
+.news-sub   { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-/* ── RULES ── */
+/* Corpo das regras da comunidade */
 .rules-body {
   padding: 12px 14px;
   font-size: 12px;
@@ -608,12 +844,202 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 }
 .rules-body strong { color: var(--text); }
 
-/* ── RESPONSIVO ── */
+
+/* ── 9. MODAIS ────────────────────────────── */
+
+/* Fundo escuro semitransparente atrás do modal */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.7);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  transition: opacity .2s;
+  backdrop-filter: blur(4px); /* desfoque do fundo */
+}
+
+/* Caixa branca/escura do modal */
+.modal-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 440px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Botão ✕ para fechar o modal */
+.modal-close {
+  position: absolute;
+  top: 14px; right: 16px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  transition: color .15s;
+}
+.modal-close:hover { color: var(--text); }
+
+/* Emoji/ícone grande no topo do modal */
+.modal-logo {
+  font-size: 40px;
+  text-align: center;
+}
+
+/* Título principal do modal */
+.modal-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text);
+}
+
+/* Subtítulo/descrição do modal */
+.modal-sub {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Botão de login com Google */
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #fff;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  padding: 11px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: opacity .15s;
+}
+.btn-google:hover { opacity: .9; }
+
+/* Linha divisória "ou" entre Google e email */
+.modal-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.modal-divider::before,
+.modal-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Abas "Entrar" / "Criar conta" */
+.auth-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--card);
+  padding: 4px;
+  border-radius: 8px;
+}
+.auth-tab {
+  flex: 1;
+  padding: 7px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  background: transparent;
+  color: var(--muted);
+  transition: all .15s;
+}
+.auth-tab.active { background: var(--accent); color: #fff; }
+
+/* Campos de texto dos formulários */
+.modal-input {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+  padding: 10px 14px;
+  outline: none;
+  font-family: 'Inter', sans-serif;
+  transition: border-color .15s;
+}
+.modal-input:focus { border-color: var(--accent); }
+.modal-input::placeholder { color: var(--muted); }
+
+/* Textarea do modal (mesma aparência do input) */
+.modal-textarea {
+  resize: vertical; /* só redimensiona verticalmente */
+  min-height: 80px;
+}
+
+/* Botão principal de confirmação nos modais */
+.btn-confirmar {
+  width: 100%;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: opacity .15s;
+  margin-top: 4px;
+}
+.btn-confirmar:hover { opacity: .85; }
+
+/* Área de upload de imagem (clicável como label) */
+.upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--card);
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  transition: border-color .15s;
+  min-height: 80px;
+}
+.upload-area:hover { border-color: var(--accent); color: var(--accent); }
+
+
+/* ── 10. RESPONSIVIDADE ───────────────────── */
+
+/* Tablet: esconde sidebar esquerda, mantém feed + sidebar direita */
 @media (max-width: 1000px) {
   .layout { grid-template-columns: 1fr 280px; }
   .sidebar-left { display: none; }
 }
+
+/* Mobile: apenas o feed, ambas sidebars somem */
 @media (max-width: 700px) {
   .layout { grid-template-columns: 1fr; }
   .sidebar-right { display: none; }
+  header { gap: 10px; padding: 0 12px; }
+  #search { width: 160px; }
+  #search:focus { width: 200px; }
 }
