@@ -2,7 +2,7 @@
 //  FRAME A FRAME — scripts.js
 // ══════════════════════════════════════════════════
 
-// ── PALAVRAS PROIBIDAS (filtro de comentários) ────
+// ── PALAVRAS PROIBIDAS ────────────────────────────
 const PALAVRAS_PROIBIDAS = [
   'merda','bosta','porra','idiota','imbecil','burro','burra',
   'otário','otaria','lixo','inútil','inutil','cretino','cretina',
@@ -10,12 +10,10 @@ const PALAVRAS_PROIBIDAS = [
   'nojento','nojenta','ridículo','ridiculo',
 ];
 
-// Verifica se o texto tem palavras proibidas
 function temPalavraProibida(texto) {
   return PALAVRAS_PROIBIDAS.some(p => texto.toLowerCase().includes(p));
 }
 
-// Substitui palavras proibidas por asteriscos
 function filtrarTexto(texto) {
   let r = texto;
   PALAVRAS_PROIBIDAS.forEach(p => {
@@ -25,16 +23,11 @@ function filtrarTexto(texto) {
 }
 
 // ── ESTADO GLOBAL ─────────────────────────────────
-// Armazena o usuário logado (null = não logado)
-let usuarioLogado = null;
-
-// Categoria atualmente selecionada no feed
+let usuarioLogado  = null;
 let categoriaAtual = 'todos';
 
-// ── BASE DE DADOS DOS POSTS ───────────────────────
-// Cada post tem: id, categoria, autor, inicial, cor do avatar,
-// comunidade, tempo, titulo, texto, tipo (video/imagem/texto),
-// tags, votos e comentários pré-existentes
+// ── POSTS COM IMAGENS REAIS DO UNSPLASH ───────────
+// Cada post tem uma imagem real de animação/arte/IA do Unsplash
 const POSTS = [
   {
     id: 'p1',
@@ -46,10 +39,11 @@ const POSTS = [
     tempo: '3h atrás',
     titulo: 'Meu primeiro curta animado feito completamente em Blender — 3 meses de trabalho!',
     texto: 'Finalmente terminei! Esse projeto começou como um exercício de modelagem e virou um curta de 2 minutos sobre uma robozinha que aprende a dançar. Usei Blender 4.2, Grease Pencil para os efeitos 2D e Krita para as texturas pintadas à mão.',
-    tipo: 'video',
+    tipo: 'imagem-url',
+    // Imagem: render 3D artístico
+    imagemUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80',
     tags: [{ label: '🎬 Blender', classe: '' }, { label: '✨ 3D', classe: '' }, { label: '✅ OC', classe: 'green' }],
-    votos: 2400,
-    comentarios: 347,
+    votos: 2400, likes: 1820, dislikes: 43, comentarios: 347,
   },
   {
     id: 'p2',
@@ -60,13 +54,12 @@ const POSTS = [
     comunidade: 'f/ia_generativa',
     tempo: '5h atrás',
     titulo: 'Fiz um workflow no ComfyUI pra gerar personagens animados consistentes — compartilhando grátis!',
-    texto: 'Depois de semanas testando, consegui criar um pipeline estável que mantém o estilo e proporções do personagem consistentes entre frames. Funciona com SDXL e Flux. Link do workflow nos comentários!',
-    tipo: 'imagem',
-    icone: '🎭',
-    iconeLabel: 'Personagens gerados com IA — 4 variações',
+    texto: 'Depois de semanas testando, consegui criar um pipeline estável que mantém o estilo e proporções do personagem consistentes entre frames. Funciona com SDXL e Flux.',
+    tipo: 'imagem-url',
+    // Imagem: arte digital gerada por IA
+    imagemUrl: 'https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=800&q=80',
     tags: [{ label: '🤖 ComfyUI', classe: '' }, { label: '🎭 Character', classe: '' }, { label: '⭐ Destaque', classe: 'gold' }],
-    votos: 1100,
-    comentarios: 212,
+    votos: 1100, likes: 934, dislikes: 12, comentarios: 212,
   },
   {
     id: 'p3',
@@ -77,11 +70,12 @@ const POSTS = [
     comunidade: 'f/criatividade',
     tempo: '8h atrás',
     titulo: 'A IA vai substituir animadores? Minha visão depois de 10 anos na área',
-    texto: 'Curto e grosso: não, pelo menos não da forma que todo mundo está com medo. A IA está mudando o que animadores fazem, não eliminando o papel deles. A criatividade, o senso narrativo, a direção artística — isso continua sendo humano. O que muda é o pipeline técnico.',
-    tipo: 'texto',
+    texto: 'Curto e grosso: não. A IA está mudando o que animadores fazem, não eliminando o papel deles. A criatividade, o senso narrativo, a direção artística — isso continua sendo humano.',
+    tipo: 'imagem-url',
+    // Imagem: pessoa desenhando/criando
+    imagemUrl: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80',
     tags: [{ label: '💬 Discussão', classe: '' }, { label: '🤖 IA', classe: '' }, { label: '🎨 Indústria', classe: '' }],
-    votos: 876,
-    comentarios: 589,
+    votos: 876, likes: 701, dislikes: 89, comentarios: 589,
   },
   {
     id: 'p4',
@@ -92,11 +86,12 @@ const POSTS = [
     comunidade: 'f/tutoriais',
     tempo: '12h atrás',
     titulo: '[Tutorial] Princípios de squash & stretch com exemplos práticos no After Effects',
-    texto: 'Squash e stretch é o primeiro princípio da animação da Disney e o mais ignorado por iniciantes. Nesse tutorial de 18 minutos cubro desde o básico até aplicações avançadas com exemplos reais de curtas premiados.',
+    texto: 'Squash e stretch é o primeiro princípio da animação da Disney e o mais ignorado por iniciantes. Tutorial de 18 minutos do básico ao avançado.',
     tipo: 'video',
+    // Vídeo: thumbnail escura com play
+    imagemUrl: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&q=80',
     tags: [{ label: '📚 Tutorial', classe: '' }, { label: '🎬 After Effects', classe: '' }, { label: '✅ Iniciante', classe: 'green' }],
-    votos: 654,
-    comentarios: 98,
+    votos: 654, likes: 589, dislikes: 8, comentarios: 98,
   },
   {
     id: 'p5',
@@ -107,11 +102,12 @@ const POSTS = [
     comunidade: 'f/ferramentas',
     tempo: '1d atrás',
     titulo: 'Kling AI vs Runway Gen-4 vs Pika 2.0 — comparei os três gerando a mesma cena',
-    texto: 'Mesmo prompt, três modelos diferentes. Resultado: Kling ganhou em movimentação de câmera, Runway em coerência temporal, Pika em estilo visual. Detalhei cada aspecto com prints e vídeos comparativos.',
-    tipo: 'texto',
+    texto: 'Mesmo prompt, três modelos diferentes. Kling ganhou em movimentação de câmera, Runway em coerência temporal, Pika em estilo visual.',
+    tipo: 'imagem-url',
+    // Imagem: tela de computador com arte digital
+    imagemUrl: 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=800&q=80',
     tags: [{ label: '🤖 Kling', classe: '' }, { label: '🤖 Runway', classe: '' }, { label: '⭐ Análise', classe: 'gold' }],
-    votos: 441,
-    comentarios: 203,
+    votos: 441, likes: 390, dislikes: 21, comentarios: 203,
   },
   {
     id: 'p6',
@@ -122,11 +118,12 @@ const POSTS = [
     comunidade: 'f/animacao2d',
     tempo: '2d atrás',
     titulo: 'Fiz uma animação 2D frame a frame de 30 segundos usando só papel e câmera de celular',
-    texto: 'Sem nenhum software caro! Só papel, lápis, uma caixa de luz improvisada e câmera do celular. Levou 3 semanas e 480 frames desenhados à mão. O resultado ficou melhor do que eu esperava.',
-    tipo: 'video',
+    texto: 'Sem nenhum software caro! Só papel, lápis, caixa de luz improvisada e câmera do celular. 480 frames desenhados à mão em 3 semanas.',
+    tipo: 'imagem-url',
+    // Imagem: desenho animado colorido
+    imagemUrl: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&q=80',
     tags: [{ label: '✏️ Frame a Frame', classe: '' }, { label: '📱 Celular', classe: '' }, { label: '✅ OC', classe: 'green' }],
-    votos: 3200,
-    comentarios: 421,
+    votos: 3200, likes: 2910, dislikes: 34, comentarios: 421,
   },
   {
     id: 'p7',
@@ -137,13 +134,12 @@ const POSTS = [
     comunidade: 'f/stopmotion',
     tempo: '2d atrás',
     titulo: 'Stop motion com massinha: fiz um personagem inteiro em 1 semana — processo completo',
-    texto: 'Nunca tinha feito stop motion antes. Comprei massinha colorida, montei um estúdio improvisado com caixas e comecei a gravar. Erro atrás de erro, até que ficou algo que me orgulha de verdade.',
-    tipo: 'imagem',
-    icone: '🧸',
-    iconeLabel: 'Personagem de massinha — 6 poses diferentes',
+    texto: 'Nunca tinha feito stop motion antes. Comprei massinha colorida, montei um estúdio improvisado com caixas e comecei a gravar. Erro atrás de erro, até ficar algo que me orgulha.',
+    tipo: 'imagem-url',
+    // Imagem: stop motion / arte com argila
+    imagemUrl: 'https://images.unsplash.com/photo-1559181567-c3190ca9d5db?w=800&q=80',
     tags: [{ label: '🧸 Stop Motion', classe: '' }, { label: '🎭 Massinha', classe: '' }, { label: '✅ OC', classe: 'green' }],
-    votos: 1870,
-    comentarios: 156,
+    votos: 1870, likes: 1654, dislikes: 17, comentarios: 156,
   },
   {
     id: 'p8',
@@ -154,13 +150,12 @@ const POSTS = [
     comunidade: 'f/character_design',
     tempo: '3d atrás',
     titulo: 'Como criar uma sheet de personagem profissional — do esboço ao modelo final',
-    texto: 'Uma character sheet bem feita economiza horas de retrabalho na animação. Mostro o meu processo: pesquisa de referências, esboços rápidos, refinamento das proporções, poses de expressão e a versão final em vetor.',
-    tipo: 'imagem',
-    icone: '🎭',
-    iconeLabel: 'Character sheet completa — frente, costas e expressões',
+    texto: 'Uma character sheet bem feita economiza horas de retrabalho na animação. Mostro meu processo: pesquisa, esboços, refinamento de proporções e versão final em vetor.',
+    tipo: 'imagem-url',
+    // Imagem: concept art / esboço de personagem
+    imagemUrl: 'https://images.unsplash.com/photo-1578632292335-df3abbb0d586?w=800&q=80',
     tags: [{ label: '🎭 Character Design', classe: '' }, { label: '📐 Sheet', classe: '' }, { label: '⭐ Destaque', classe: 'gold' }],
-    votos: 992,
-    comentarios: 87,
+    votos: 992, likes: 876, dislikes: 5, comentarios: 87,
   },
   {
     id: 'p9',
@@ -171,11 +166,12 @@ const POSTS = [
     comunidade: 'f/ia_generativa',
     tempo: '3d atrás',
     titulo: 'Lista com 50 prompts testados para gerar animações no Runway ML — todos funcionam',
-    texto: 'Passei um mês testando prompts no Runway Gen-4 para animação de personagens. Separei os 50 que deram os melhores resultados por categoria: movimento de câmera, expressões faciais, cenas de ação e cenários.',
-    tipo: 'texto',
+    texto: 'Passei um mês testando prompts no Runway Gen-4. Separei os 50 melhores por categoria: movimento de câmera, expressões faciais, cenas de ação e cenários.',
+    tipo: 'imagem-url',
+    // Imagem: arte gerada por IA / futurista
+    imagemUrl: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80',
     tags: [{ label: '🤖 Runway', classe: '' }, { label: '📝 Prompts', classe: '' }, { label: '⭐ Destaque', classe: 'gold' }],
-    votos: 2100,
-    comentarios: 334,
+    votos: 2100, likes: 1987, dislikes: 28, comentarios: 334,
   },
   {
     id: 'p10',
@@ -186,26 +182,26 @@ const POSTS = [
     comunidade: 'f/shorts',
     tempo: '4d atrás',
     titulo: 'Animei o meme do gato no piano em estilo Studio Ghibli — ficou surreal kkk',
-    texto: 'Peguei o meme clássico do gato tocando piano e reanimei frame a frame no estilo Ghibli. Demorou 2 semanas mas a galera aqui precisa ver isso. Spoiler: o gato virou um espírito da floresta.',
+    texto: 'Peguei o meme clássico do gato tocando piano e reanimei frame a frame no estilo Ghibli. Demorou 2 semanas. O gato virou um espírito da floresta kkk',
     tipo: 'video',
+    // Imagem thumbnail do vídeo
+    imagemUrl: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&q=80',
     tags: [{ label: '😂 Meme', classe: '' }, { label: '🎌 Ghibli', classe: '' }, { label: '🎬 Shorts', classe: '' }],
-    votos: 5600,
-    comentarios: 892,
+    votos: 5600, likes: 5210, dislikes: 67, comentarios: 892,
   },
 ];
 
 // ── EMOJIS DE REAÇÃO ──────────────────────────────
-// Lista de emojis disponíveis para reagir nos posts
 const EMOJIS = [
-  { emoji: '❤️', label: 'Amei' },
-  { emoji: '🔥', label: 'Incrível' },
-  { emoji: '😂', label: 'Haha' },
-  { emoji: '😮', label: 'Uau' },
-  { emoji: '😢', label: 'Triste' },
-  { emoji: '👏', label: 'Parabéns' },
+  { emoji: '❤️', label: 'Amei'      },
+  { emoji: '🔥', label: 'Incrível'  },
+  { emoji: '😂', label: 'Haha'      },
+  { emoji: '😮', label: 'Uau'       },
+  { emoji: '😢', label: 'Triste'    },
+  { emoji: '👏', label: 'Parabéns'  },
 ];
 
-// ── TOAST (notificação flutuante) ─────────────────
+// ── TOAST ─────────────────────────────────────────
 function mostrarToast(msg, tipo = 'info') {
   const cores = { info: '#b44dff', sucesso: '#3ddc84', aviso: '#f5c842', erro: '#ff4466' };
   const t = document.createElement('div');
@@ -218,8 +214,8 @@ function mostrarToast(msg, tipo = 'info') {
   `;
   t.textContent = msg;
   document.body.appendChild(t);
-  setTimeout(() => { t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)'; }, 10);
-  setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 400); }, 3000);
+  setTimeout(() => { t.style.opacity='1'; t.style.transform='translateX(-50%) translateY(0)'; }, 10);
+  setTimeout(() => { t.style.opacity='0'; setTimeout(() => t.remove(), 400); }, 3000);
 }
 
 // ── MODAIS ────────────────────────────────────────
@@ -233,26 +229,20 @@ function fecharModal(id) {
   m.style.opacity = '0';
   setTimeout(() => m.style.display = 'none', 200);
 }
-// Fecha modal ao clicar no overlay escuro
 document.querySelectorAll('.modal-overlay').forEach(o => {
   o.addEventListener('click', e => { if (e.target === o) fecharModal(o.id); });
 });
 
 // ── GOOGLE LOGIN ──────────────────────────────────
-// Essa função é chamada automaticamente pelo SDK do Google
-// quando o usuário escolhe uma conta e confirma o login
+// Chamada pelo SDK do Google quando o usuário escolhe a conta
 function handleGoogleLogin(response) {
-  // Decodifica o JWT retornado pelo Google para pegar os dados do usuário
   const payload = JSON.parse(atob(response.credential.split('.')[1]));
-
-  // Salva o usuário logado com nome, email e foto do Google
   usuarioLogado = {
     nome:    payload.name,
     email:   payload.email,
-    foto:    payload.picture,  // URL da foto de perfil do Google
+    foto:    payload.picture,
     inicial: payload.name[0].toUpperCase(),
   };
-
   fecharModal('modal-auth');
   atualizarUILogin();
   mostrarToast(`Bem-vindo, ${payload.given_name}! 🎉`, 'sucesso');
@@ -278,42 +268,37 @@ document.getElementById('btnCadastrar').addEventListener('click', () => {
   const email = document.getElementById('cad-email').value.trim();
   const tel   = document.getElementById('cad-tel').value.trim();
   const senha = document.getElementById('cad-senha').value.trim();
-  if (!nome) { mostrarToast('Escolha um nome!', 'aviso'); return; }
-  if (!email && !tel) { mostrarToast('Informe e-mail ou telefone!', 'aviso'); return; }
-  if (senha.length < 6) { mostrarToast('Senha muito curta!', 'erro'); return; }
+  if (!nome)           { mostrarToast('Escolha um nome!', 'aviso'); return; }
+  if (!email && !tel)  { mostrarToast('Informe e-mail ou telefone!', 'aviso'); return; }
+  if (senha.length < 6){ mostrarToast('Senha muito curta!', 'erro'); return; }
   usuarioLogado = { nome, email: email || tel, foto: null, inicial: nome[0].toUpperCase() };
   fecharModal('modal-auth');
   atualizarUILogin();
   mostrarToast(`Conta criada! Bem-vindo, ${nome}! 🚀`, 'sucesso');
 });
 
-// ── TROCAR ABA LOGIN/CADASTRO ────────────────────
+// ── TROCAR ABA LOGIN/CADASTRO ─────────────────────
 function trocarAba(qual) {
   document.querySelectorAll('.auth-tab').forEach((t, i) =>
-    t.classList.toggle('active', (i === 0 && qual === 'login') || (i === 1 && qual === 'cadastro'))
+    t.classList.toggle('active', (i===0 && qual==='login') || (i===1 && qual==='cadastro'))
   );
   const fl = document.getElementById('form-login');
   const fc = document.getElementById('form-cadastro');
-  fl.style.display = qual === 'login'    ? 'flex' : 'none';
-  fc.style.display = qual === 'cadastro' ? 'flex' : 'none';
-  if (fl.style.display === 'flex') fl.style.flexDirection = 'column', fl.style.gap = '10px';
-  if (fc.style.display === 'flex') fc.style.flexDirection = 'column', fc.style.gap = '10px';
+  fl.style.cssText = qual==='login'    ? 'display:flex;flex-direction:column;gap:10px;' : 'display:none;';
+  fc.style.cssText = qual==='cadastro' ? 'display:flex;flex-direction:column;gap:10px;' : 'display:none;';
 }
 
-// ── ATUALIZA O HEADER APÓS LOGIN ─────────────────
-// Troca o botão "Entrar" pelo avatar (foto ou inicial) do usuário
+// ── ATUALIZA HEADER APÓS LOGIN ────────────────────
 function atualizarUILogin() {
   const btn = document.getElementById('btnLogin');
   btn.innerHTML = '';
   btn.style.cssText = `
-    width:34px; height:34px; border-radius:50%; padding:0; overflow:hidden;
+    width:34px;height:34px;border-radius:50%;padding:0;overflow:hidden;
     background:linear-gradient(135deg,#b44dff,#7b2fff);
-    color:#fff; font-size:14px; font-weight:700; border:2px solid #b44dff;
-    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    color:#fff;font-size:14px;font-weight:700;border:2px solid #b44dff;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
   `;
-
   if (usuarioLogado.foto) {
-    // Se tem foto do Google, mostra a foto
     const img = document.createElement('img');
     img.src = usuarioLogado.foto;
     img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
@@ -321,8 +306,6 @@ function atualizarUILogin() {
   } else {
     btn.textContent = usuarioLogado.inicial;
   }
-
-  // Ao clicar no avatar, opção de sair
   btn.onclick = () => {
     if (confirm(`Sair da conta de ${usuarioLogado.nome}?`)) {
       usuarioLogado = null;
@@ -335,14 +318,12 @@ function atualizarUILogin() {
   };
 }
 
-// ── RENDERIZAR POSTS NO FEED ─────────────────────
-// Recebe um array de posts e os renderiza no container
+// ── RENDERIZAR POSTS ──────────────────────────────
 function renderizarPosts(lista) {
   const container = document.getElementById('posts-container');
   container.innerHTML = '';
 
   if (lista.length === 0) {
-    // Mensagem quando não há posts na categoria
     container.innerHTML = `
       <div style="text-align:center;padding:60px 20px;color:var(--muted);">
         <div style="font-size:48px;margin-bottom:12px;">🎨</div>
@@ -358,27 +339,29 @@ function renderizarPosts(lista) {
     card.dataset.categoria = post.categoria;
     card.id = post.id;
 
-    // Monta o conteúdo de mídia do post (vídeo, imagem ou nada)
+    // Monta o bloco de mídia do post
     let midia = '';
     if (post.tipo === 'video') {
-      midia = `<div class="video-thumb" title="Assistir"><div class="play-btn"></div></div>`;
-    } else if (post.tipo === 'imagem') {
+      // Vídeo: mostra a imagem como thumbnail com botão de play por cima
       midia = `
-        <div class="post-image-placeholder">
-          <span style="font-size:40px;">${post.icone}</span>
-          <span>${post.iconeLabel}</span>
+        <div class="video-thumb" title="Assistir" style="background-image:url('${post.imagemUrl}');background-size:cover;background-position:center;">
+          <div class="play-btn"></div>
         </div>`;
+    } else if (post.tipo === 'imagem-url') {
+      // Imagem real do Unsplash
+      midia = `
+        <img
+          src="${post.imagemUrl}"
+          alt="${post.titulo}"
+          class="post-img-real"
+          loading="lazy"
+          onerror="this.style.display='none'"
+        >`;
     }
 
-    // Monta as tags do post
-    const tagsHTML = post.tags.map(t =>
-      `<span class="tag ${t.classe}">${t.label}</span>`
-    ).join('');
-
-    // Formata o número de votos (ex: 2400 → 2.4k)
+    const tagsHTML = post.tags.map(t => `<span class="tag ${t.classe}">${t.label}</span>`).join('');
     const votosDisplay = post.votos >= 1000
-      ? (post.votos / 1000).toFixed(1).replace('.0', '') + 'k'
-      : post.votos;
+      ? (post.votos/1000).toFixed(1).replace('.0','')+'k' : post.votos;
 
     card.innerHTML = `
       <!-- Coluna de votos -->
@@ -387,6 +370,7 @@ function renderizarPosts(lista) {
         <span class="vote-count">${votosDisplay}</span>
         <button class="vote-btn down" title="Downvote">▼</button>
       </div>
+
       <!-- Corpo do post -->
       <div class="post-body">
         <div class="post-meta">
@@ -394,12 +378,30 @@ function renderizarPosts(lista) {
           <span class="community">${post.comunidade}</span>
           · postado por <strong>u/${post.autor}</strong> · ${post.tempo}
         </div>
+
         <div class="post-title">${post.titulo}</div>
         <div class="tags">${tagsHTML}</div>
         ${midia}
         <div class="post-text">${post.texto}</div>
-        <!-- Área de reações com emojis -->
-        <div class="reacoes-wrap" data-post="${post.id}"></div>
+
+        <!-- Área de likes/dislikes + reações com emojis -->
+        <div class="interacoes-wrap">
+
+          <!-- Likes e dislikes simples (para quem não quer usar emojis) -->
+          <div class="like-dislike-wrap">
+            <button class="btn-like" data-post="${post.id}" title="Gostei">
+              👍 <span class="like-count">${post.likes}</span>
+            </button>
+            <button class="btn-dislike" data-post="${post.id}" title="Não gostei">
+              👎 <span class="dislike-count">${post.dislikes}</span>
+            </button>
+          </div>
+
+          <!-- Reações com emojis (estilo Facebook) -->
+          <div class="reacoes-wrap" data-post="${post.id}"></div>
+
+        </div>
+
         <!-- Botões de ação -->
         <div class="post-actions">
           <button class="action-btn btn-comentar" data-target="${post.id}">
@@ -408,6 +410,7 @@ function renderizarPosts(lista) {
           <button class="action-btn btn-compartilhar">🔗 Compartilhar</button>
           <button class="action-btn btn-salvar">⭐ Salvar</button>
         </div>
+
         <!-- Seção de comentários (oculta inicialmente) -->
         <div class="secao-comentarios" id="comentarios-${post.id}" style="display:none;"></div>
       </div>
@@ -415,36 +418,35 @@ function renderizarPosts(lista) {
 
     container.appendChild(card);
 
-    // Inicializa votos e reações do post recém-criado
+    // Inicializa os sistemas interativos do post
     inicializarVotos(card.querySelector('.vote-col'), post.votos);
+    inicializarLikeDislike(card, post);
     inicializarReacoes(card.querySelector('.reacoes-wrap'));
   });
 }
 
 // ── FILTRAR POR CATEGORIA ────────────────────────
-// Filtra os posts do feed de acordo com a categoria clicada
 function filtrarCategoria(categoria) {
   categoriaAtual = categoria;
 
-  // Atualiza o link ativo no nav e sidebar
-  document.querySelectorAll('nav a, .sidebar-link').forEach(el => el.classList.remove('active'));
+  // Atualiza links ativos
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.sidebar-link').forEach(a => a.classList.remove('active'));
 
-  // Filtra os posts
   const lista = categoria === 'todos' || categoria === 'trending'
-    ? [...POSTS].sort((a, b) => b.votos - a.votos) // todos ou trending = ordenado por votos
+    ? [...POSTS].sort((a,b) => b.votos - a.votos)
     : POSTS.filter(p => p.categoria === categoria);
 
-  // Mostra o label da categoria atual
+  // Mostra label da categoria
   const label = document.getElementById('categoria-label');
   const nomes = {
-    todos: null, trending: '🔥 Trending — posts mais votados',
+    todos: null, trending: '🔥 Trending',
     animacao2d: '🎨 Animação 2D', '3d': '🧊 3D & Motion',
     ia: '🤖 IA Generativa', stopmotion: '📽 Stop Motion',
     character: '🎭 Character Design', tutorial: '💡 Tutoriais',
     ferramentas: '🛠 Ferramentas', criatividade: '✨ Criatividade',
     shorts: '🎬 Shorts',
   };
-
   if (nomes[categoria]) {
     label.textContent = nomes[categoria];
     label.style.display = 'block';
@@ -453,22 +455,20 @@ function filtrarCategoria(categoria) {
   }
 
   renderizarPosts(lista);
-  // Rola suavemente até o topo do feed
   document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
 }
 
-// ── VOTOS ─────────────────────────────────────────
-// Inicializa o sistema de upvote/downvote de um post
+// ── VOTOS (upvote/downvote) ───────────────────────
 function inicializarVotos(col, votosIniciais) {
   const upBtn   = col.querySelector('.vote-btn.up');
   const downBtn = col.querySelector('.vote-btn.down');
   const countEl = col.querySelector('.vote-count');
   let count   = votosIniciais;
-  let current = 0; // -1 = downvote, 0 = neutro, 1 = upvote
+  let current = 0;
 
   function render() {
     countEl.textContent = count >= 1000
-      ? (count / 1000).toFixed(1).replace('.0', '') + 'k' : count;
+      ? (count/1000).toFixed(1).replace('.0','')+'k' : count;
     upBtn.style.color   = current ===  1 ? '#b44dff' : '';
     downBtn.style.color = current === -1 ? '#ff5555' : '';
     countEl.style.color = current ===  1 ? '#b44dff' : current === -1 ? '#ff5555' : '';
@@ -476,29 +476,79 @@ function inicializarVotos(col, votosIniciais) {
 
   upBtn.addEventListener('click', () => {
     if (!usuarioLogado) { mostrarToast('Entre para votar! 👤', 'aviso'); abrirModal('modal-auth'); return; }
-    current === 1 ? (count--, current = 0) : (count += current === -1 ? 2 : 1, current = 1, mostrarToast('Upvote! 🔺', 'sucesso'));
+    current===1 ? (count--,current=0) : (count+=current===-1?2:1,current=1,mostrarToast('Upvote! 🔺','sucesso'));
     render();
   });
   downBtn.addEventListener('click', () => {
     if (!usuarioLogado) { mostrarToast('Entre para votar! 👤', 'aviso'); abrirModal('modal-auth'); return; }
-    current === -1 ? (count++, current = 0) : (count -= current === 1 ? 2 : 1, current = -1, mostrarToast('Downvote 🔻', 'info'));
+    current===-1 ? (count++,current=0) : (count-=current===1?2:1,current=-1,mostrarToast('Downvote 🔻','info'));
+    render();
+  });
+}
+
+// ── LIKE / DISLIKE ────────────────────────────────
+// Sistema simples de 👍 e 👎 separado das reações com emoji
+function inicializarLikeDislike(card, post) {
+  const btnLike    = card.querySelector('.btn-like');
+  const btnDislike = card.querySelector('.btn-dislike');
+  const likeCount    = card.querySelector('.like-count');
+  const dislikeCount = card.querySelector('.dislike-count');
+
+  let likes    = post.likes;
+  let dislikes = post.dislikes;
+  let estado   = null; // 'like', 'dislike' ou null
+
+  function render() {
+    likeCount.textContent    = likes;
+    dislikeCount.textContent = dislikes;
+    // Ativa o botão clicado com cor verde (like) ou vermelha (dislike)
+    btnLike.style.background    = estado === 'like'    ? '#1a3a1a' : '';
+    btnLike.style.color         = estado === 'like'    ? '#3ddc84' : '';
+    btnLike.style.borderColor   = estado === 'like'    ? '#3ddc84' : '';
+    btnDislike.style.background = estado === 'dislike' ? '#3a1a1a' : '';
+    btnDislike.style.color      = estado === 'dislike' ? '#ff5555' : '';
+    btnDislike.style.borderColor= estado === 'dislike' ? '#ff5555' : '';
+  }
+
+  btnLike.addEventListener('click', () => {
+    if (!usuarioLogado) { mostrarToast('Entre para curtir! 👤', 'aviso'); abrirModal('modal-auth'); return; }
+    if (estado === 'like') {
+      // Remove o like
+      likes--; estado = null;
+    } else {
+      // Se tinha dislike, remove ele
+      if (estado === 'dislike') dislikes--;
+      likes++; estado = 'like';
+      mostrarToast('Você curtiu esse post! 👍', 'sucesso');
+    }
+    render();
+  });
+
+  btnDislike.addEventListener('click', () => {
+    if (!usuarioLogado) { mostrarToast('Entre para reagir! 👤', 'aviso'); abrirModal('modal-auth'); return; }
+    if (estado === 'dislike') {
+      // Remove o dislike
+      dislikes--; estado = null;
+    } else {
+      // Se tinha like, remove ele
+      if (estado === 'like') likes--;
+      dislikes++; estado = 'dislike';
+      mostrarToast('Você não curtiu esse post 👎', 'info');
+    }
     render();
   });
 }
 
 // ── REAÇÕES COM EMOJIS ────────────────────────────
-// Inicializa o botão de reagir e o picker de emojis de um post
 function inicializarReacoes(wrap) {
   if (!wrap) return;
-  const contagens = {}; // { '❤️': 3, '🔥': 1 }
-  let reacaoUsuario = null; // qual emoji o usuário escolheu
+  const contagens = {};
+  let reacaoUsuario = null;
 
-  // Cria o botão "Reagir"
   const btnReagir = document.createElement('button');
   btnReagir.className = 'btn-reagir';
   btnReagir.innerHTML = '😊 Reagir';
 
-  // Cria o picker flutuante
   const picker = document.createElement('div');
   picker.className = 'emoji-picker';
 
@@ -508,19 +558,16 @@ function inicializarReacoes(wrap) {
     btn.textContent = emoji;
     btn.title = label;
     btn.addEventListener('click', () => {
-      if (!usuarioLogado) { mostrarToast('Entre para reagir! 👤', 'aviso'); abrirModal('modal-auth'); picker.classList.remove('aberto'); return; }
+      if (!usuarioLogado) { mostrarToast('Entre para reagir! 👤','aviso'); abrirModal('modal-auth'); picker.classList.remove('aberto'); return; }
       if (reacaoUsuario === emoji) {
-        contagens[emoji] = (contagens[emoji] || 1) - 1;
-        if (contagens[emoji] <= 0) delete contagens[emoji];
-        reacaoUsuario = null;
+        contagens[emoji]=(contagens[emoji]||1)-1;
+        if(contagens[emoji]<=0)delete contagens[emoji];
+        reacaoUsuario=null;
       } else {
-        if (reacaoUsuario) {
-          contagens[reacaoUsuario]--;
-          if (contagens[reacaoUsuario] <= 0) delete contagens[reacaoUsuario];
-        }
-        reacaoUsuario = emoji;
-        contagens[emoji] = (contagens[emoji] || 0) + 1;
-        mostrarToast(`Você reagiu com ${emoji}`, 'sucesso');
+        if(reacaoUsuario){contagens[reacaoUsuario]--;if(contagens[reacaoUsuario]<=0)delete contagens[reacaoUsuario];}
+        reacaoUsuario=emoji;
+        contagens[emoji]=(contagens[emoji]||0)+1;
+        mostrarToast(`Você reagiu com ${emoji}`,'sucesso');
       }
       picker.classList.remove('aberto');
       renderBubbles();
@@ -533,37 +580,29 @@ function inicializarReacoes(wrap) {
   document.addEventListener('click', () => picker.classList.remove('aberto'));
   wrap.appendChild(btnReagir);
 
-  // Renderiza as bolhas de reação com contadores
   function renderBubbles() {
     wrap.querySelectorAll('.reacao-bubble').forEach(b => b.remove());
     Object.entries(contagens).forEach(([emoji, qtd]) => {
-      if (qtd <= 0) return;
+      if(qtd<=0)return;
       const bubble = document.createElement('button');
-      bubble.className = 'reacao-bubble' + (reacaoUsuario === emoji ? ' ativa' : '');
-      bubble.innerHTML = `${emoji} <span class="contagem">${qtd}</span>`;
-      bubble.addEventListener('click', () => {
-        if (!usuarioLogado) { abrirModal('modal-auth'); return; }
-        if (reacaoUsuario === emoji) {
-          contagens[emoji]--; if (contagens[emoji] <= 0) delete contagens[emoji]; reacaoUsuario = null;
-        } else {
-          if (reacaoUsuario) { contagens[reacaoUsuario]--; if (contagens[reacaoUsuario] <= 0) delete contagens[reacaoUsuario]; }
-          reacaoUsuario = emoji; contagens[emoji] = (contagens[emoji] || 0) + 1;
-        }
+      bubble.className='reacao-bubble'+(reacaoUsuario===emoji?' ativa':'');
+      bubble.innerHTML=`${emoji} <span class="contagem">${qtd}</span>`;
+      bubble.addEventListener('click',()=>{
+        if(!usuarioLogado){abrirModal('modal-auth');return;}
+        if(reacaoUsuario===emoji){contagens[emoji]--;if(contagens[emoji]<=0)delete contagens[emoji];reacaoUsuario=null;}
+        else{if(reacaoUsuario){contagens[reacaoUsuario]--;if(contagens[reacaoUsuario]<=0)delete contagens[reacaoUsuario];}reacaoUsuario=emoji;contagens[emoji]=(contagens[emoji]||0)+1;}
         renderBubbles();
       });
-      wrap.insertBefore(bubble, btnReagir);
+      wrap.insertBefore(bubble,btnReagir);
     });
   }
 }
 
 // ── COMENTÁRIOS ───────────────────────────────────
-// Inicializa a seção de comentários de um post
 function inicializarComentarios(secao, postId) {
   if (secao.dataset.inicializado) return;
   secao.dataset.inicializado = 'true';
-  const comentarios = [];
 
-  // Campo de escrever comentário
   const wrap = document.createElement('div');
   wrap.className = 'comentario-input-wrap';
   const textarea = document.createElement('textarea');
@@ -575,90 +614,71 @@ function inicializarComentarios(secao, postId) {
   btnEnviar.textContent = 'Enviar';
 
   btnEnviar.addEventListener('click', () => {
-    if (!usuarioLogado) { mostrarToast('Entre para comentar! 👤', 'aviso'); abrirModal('modal-auth'); return; }
+    if (!usuarioLogado) { mostrarToast('Entre para comentar! 👤','aviso'); abrirModal('modal-auth'); return; }
     const texto = textarea.value.trim();
-    if (!texto) { mostrarToast('Escreva algo!', 'aviso'); return; }
+    if (!texto) { mostrarToast('Escreva algo!','aviso'); return; }
     const filtrado = temPalavraProibida(texto);
     const obj = { autor: usuarioLogado.nome, inicial: usuarioLogado.inicial, foto: usuarioLogado.foto, texto: filtrarTexto(texto), filtrado };
-    comentarios.push(obj);
     renderComentario(obj, lista);
-    // Atualiza o contador de comentários
     const numEl = document.querySelector(`#${postId} .num-comentarios`);
-    if (numEl) numEl.textContent = parseInt(numEl.textContent) + 1;
-    if (filtrado) mostrarToast('Comentário filtrado por linguagem inadequada ⚠️', 'aviso');
-    else mostrarToast('Comentário enviado! 💬', 'sucesso');
+    if (numEl) numEl.textContent = parseInt(numEl.textContent)+1;
+    if (filtrado) mostrarToast('Comentário filtrado ⚠️','aviso');
+    else mostrarToast('Comentário enviado! 💬','sucesso');
     textarea.value = '';
   });
 
-  textarea.addEventListener('keydown', e => { if (e.key === 'Enter' && e.ctrlKey) btnEnviar.click(); });
+  textarea.addEventListener('keydown', e => { if(e.key==='Enter'&&e.ctrlKey)btnEnviar.click(); });
   wrap.appendChild(textarea);
   wrap.appendChild(btnEnviar);
   secao.appendChild(wrap);
-
   const lista = document.createElement('div');
   secao.appendChild(lista);
 }
 
-// Cria e exibe um card de comentário
 function renderComentario(c, lista) {
   const card = document.createElement('div');
   card.className = 'comentario-card';
-
-  // Avatar: foto do Google ou inicial colorida
   const avatarHTML = c.foto
     ? `<img src="${c.foto}" style="width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
     : `<div class="comentario-avatar">${c.inicial}</div>`;
-
   card.innerHTML = `
     ${avatarHTML}
     <div class="comentario-corpo">
       <div class="comentario-autor">u/${c.autor}</div>
       <div class="comentario-texto">${c.texto}</div>
-      ${c.filtrado ? `<div class="comentario-aviso">⚠️ Parte deste comentário foi ocultada por violar as regras.</div>` : ''}
-    </div>
-  `;
+      ${c.filtrado?`<div class="comentario-aviso">⚠️ Parte deste comentário foi ocultada por violar as regras.</div>`:''}
+    </div>`;
   lista.appendChild(card);
 }
 
 // ── DELEGAÇÃO DE EVENTOS DO FEED ─────────────────
-// Captura cliques nos botões dos posts (funciona para posts novos também)
-document.getElementById('feed').addEventListener('click', function (e) {
-
-  // Botão de comentários
+document.getElementById('feed').addEventListener('click', function(e) {
   const btnComentar = e.target.closest('.btn-comentar');
   if (btnComentar) {
     const postId = btnComentar.dataset.target;
-    const secao  = document.getElementById('comentarios-' + postId);
-    if (secao) {
-      inicializarComentarios(secao, postId);
-      secao.style.display = secao.style.display === 'none' ? 'block' : 'none';
-    }
+    const secao  = document.getElementById('comentarios-'+postId);
+    if (secao) { inicializarComentarios(secao,postId); secao.style.display=secao.style.display==='none'?'block':'none'; }
   }
-
-  // Botão compartilhar
   if (e.target.closest('.btn-compartilhar')) {
-    navigator.clipboard?.writeText(window.location.href).catch(() => {});
-    mostrarToast('Link copiado! 🔗', 'sucesso');
+    navigator.clipboard?.writeText(window.location.href).catch(()=>{});
+    mostrarToast('Link copiado! 🔗','sucesso');
   }
-
-  // Botão salvar
   if (e.target.closest('.btn-salvar')) {
-    if (!usuarioLogado) { mostrarToast('Entre para salvar! 👤', 'aviso'); abrirModal('modal-auth'); return; }
+    if (!usuarioLogado) { mostrarToast('Entre para salvar! 👤','aviso'); abrirModal('modal-auth'); return; }
     const btn = e.target.closest('.btn-salvar');
     const salvo = btn.textContent.includes('Salvo');
     btn.textContent = salvo ? '⭐ Salvar' : '✅ Salvo';
-    mostrarToast(salvo ? 'Removido dos salvos.' : 'Post salvo! ⭐', salvo ? 'info' : 'sucesso');
+    mostrarToast(salvo?'Removido dos salvos.':'Post salvo! ⭐', salvo?'info':'sucesso');
   }
 });
 
 // ── MODAL DE CRIAR POST ───────────────────────────
 document.getElementById('btnPostar').addEventListener('click', () => {
-  if (!usuarioLogado) { mostrarToast('Entre para postar! 👤', 'aviso'); abrirModal('modal-auth'); return; }
+  if (!usuarioLogado) { mostrarToast('Entre para postar! 👤','aviso'); abrirModal('modal-auth'); return; }
   abrirModal('modal-post');
 });
 
-// Preview de imagem no modal de post
-document.getElementById('post-imagem').addEventListener('change', function () {
+document.getElementById('post-imagem').addEventListener('change', function() {
   const arquivo = this.files[0];
   if (!arquivo) return;
   const reader = new FileReader();
@@ -671,7 +691,6 @@ document.getElementById('post-imagem').addEventListener('change', function () {
   reader.readAsDataURL(arquivo);
 });
 
-// Publicar novo post
 document.getElementById('btnPublicar').addEventListener('click', () => {
   const titulo    = document.getElementById('post-titulo').value.trim();
   const legenda   = document.getElementById('post-legenda').value.trim();
@@ -679,77 +698,57 @@ document.getElementById('btnPublicar').addEventListener('click', () => {
   const categoria = document.getElementById('post-categoria').value;
   const preview   = document.getElementById('upload-preview');
   const temImg    = preview.style.display !== 'none' && preview.src;
+  if (!titulo) { mostrarToast('Título obrigatório!','aviso'); return; }
 
-  if (!titulo) { mostrarToast('Título obrigatório!', 'aviso'); return; }
-
-  // Cria o objeto do novo post e adiciona ao array de posts
   const novoPost = {
-    id:        'post-' + Date.now(),
-    categoria,
-    autor:     usuarioLogado.nome,
-    inicial:   usuarioLogado.inicial,
-    avatarCor: '#7b2fff',
-    comunidade: 'f/geral',
-    tempo:     'agora',
-    titulo,
-    texto:     legenda,
-    tipo:      temImg ? 'imagem' : 'texto',
-    icone:     '🖼',
-    iconeLabel: 'Imagem do post',
-    tags:      [],
-    votos:     1,
-    comentarios: 0,
-    imagemBase64: temImg ? preview.src : null,
+    id: 'post-'+Date.now(), categoria,
+    autor: usuarioLogado.nome, inicial: usuarioLogado.inicial,
+    avatarCor: '#7b2fff', comunidade: 'f/geral', tempo: 'agora',
+    titulo, texto: legenda,
+    tipo: temImg ? 'imagem-url' : 'texto',
+    imagemUrl: temImg ? preview.src : null,
+    tags: [], votos: 1, likes: 0, dislikes: 0, comentarios: 0,
   };
 
-  POSTS.unshift(novoPost); // adiciona no início do array
-
-  // Re-renderiza o feed mantendo a categoria atual
+  POSTS.unshift(novoPost);
   filtrarCategoria(categoriaAtual);
-
-  // Fecha o modal e limpa os campos
   fecharModal('modal-post');
   document.getElementById('post-titulo').value  = '';
   document.getElementById('post-legenda').value = '';
   document.getElementById('post-musica').value  = '';
-  preview.style.display = 'none'; preview.src = '';
-  document.getElementById('upload-texto').textContent = '📁 Clique para escolher uma imagem da galeria';
-
-  mostrarToast('Post publicado! 🚀', 'sucesso');
+  preview.style.display='none'; preview.src='';
+  document.getElementById('upload-texto').textContent='📁 Clique para escolher uma imagem da galeria';
+  mostrarToast('Post publicado! 🚀','sucesso');
 });
 
-// ── TABS DO FEED ──────────────────────────────────
+// ── TABS ──────────────────────────────────────────
 document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', function () {
+  tab.addEventListener('click', function() {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     this.classList.add('active');
-    // Trending ordena por votos; os outros mostram todos
     if (this.textContent.includes('Em Alta')) filtrarCategoria('trending');
     else filtrarCategoria('todos');
   });
 });
 
 // ── BUSCA ─────────────────────────────────────────
-// Filtra os posts em tempo real pelo título
-document.getElementById('search').addEventListener('input', function () {
+document.getElementById('search').addEventListener('input', function() {
   const termo = this.value.toLowerCase().trim();
   if (!termo) { filtrarCategoria(categoriaAtual); return; }
-  const filtrados = POSTS.filter(p => p.titulo.toLowerCase().includes(termo));
-  renderizarPosts(filtrados);
+  renderizarPosts(POSTS.filter(p => p.titulo.toLowerCase().includes(termo)));
 });
 
-// ── BOTÕES DO HEADER ──────────────────────────────
+// ── BOTÕES FIXOS ──────────────────────────────────
 document.getElementById('btnLogin').addEventListener('click', () => abrirModal('modal-auth'));
 
 document.getElementById('btnJoin').addEventListener('click', () => {
-  if (!usuarioLogado) { mostrarToast('Entre para participar! 👤', 'aviso'); abrirModal('modal-auth'); return; }
+  if (!usuarioLogado) { mostrarToast('Entre para participar! 👤','aviso'); abrirModal('modal-auth'); return; }
   const btn = document.getElementById('btnJoin');
   const entrou = btn.textContent.includes('Membro');
   btn.textContent = entrou ? 'Entrar na Comunidade' : '✅ Membro!';
   btn.style.background = entrou ? 'var(--accent)' : 'var(--green)';
-  mostrarToast(entrou ? 'Você saiu da comunidade.' : 'Você entrou! 🎉', entrou ? 'info' : 'sucesso');
+  mostrarToast(entrou?'Você saiu da comunidade.':'Você entrou! 🎉', entrou?'info':'sucesso');
 });
 
 // ── INICIALIZAÇÃO ─────────────────────────────────
-// Renderiza todos os posts ao carregar a página
 renderizarPosts(POSTS);
