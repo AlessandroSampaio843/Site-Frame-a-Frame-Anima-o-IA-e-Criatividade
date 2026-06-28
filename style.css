@@ -1021,90 +1021,133 @@ nav a.active { color: #fff; background: var(--accent); }
    MOBILE — ajustes para telas pequenas
    Tudo abaixo de 600px de largura
 ══════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   MOBILE — ajustes para telas pequenas
+══════════════════════════════════════════════ */
 @media (max-width: 600px) {
 
-  /* Header mais compacto */
+  /* Header em duas linhas */
   header {
     height: auto;
-    padding: 10px 12px;
+    padding: 8px 12px;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
   }
-
-  /* Logo menor */
   .logo { font-size: 14px; }
   .logo-icon { width: 26px; height: 26px; font-size: 12px; }
-
-  /* Esconde o menu de navegação no mobile (fica na sidebar) */
   nav { display: none; }
 
-  /* Busca ocupa a linha toda */
-  .search-wrap { flex: 1; }
-  #search { width: 100% !important; }
+  /* Busca e botões na mesma linha */
+  .search-wrap { flex: 1; min-width: 0; }
+  #search { width: 100% !important; font-size: 13px; }
+  .header-right { gap: 6px; }
+  .btn-login { padding: 5px 10px; font-size: 12px; }
+  .btn-post  { padding: 5px 10px; font-size: 12px; }
 
-  /* Botões do header menores */
-  .btn-login { padding: 5px 12px; font-size: 12px; }
-  .btn-post  { padding: 5px 12px; font-size: 12px; }
-
-  /* Layout vira coluna única */
+  /* Layout coluna única sem padding excessivo */
   .layout {
     grid-template-columns: 1fr !important;
-    padding: 12px 10px;
-    gap: 12px;
+    padding: 10px 8px;
+    gap: 10px;
   }
-
-  /* Esconde as duas sidebars no mobile */
   .sidebar-left  { display: none !important; }
   .sidebar-right { display: none !important; }
 
-  /* Tabs menores e com scroll horizontal */
+  /* Tabs com scroll horizontal sem quebrar */
   .feed-tabs {
     overflow-x: auto;
-    scrollbar-width: none;
-    padding-bottom: 4px;
     flex-wrap: nowrap;
+    scrollbar-width: none;
+    gap: 6px;
+    padding-bottom: 2px;
+    margin-bottom: 10px;
   }
   .feed-tabs::-webkit-scrollbar { display: none; }
   .tab {
-    padding: 6px 14px;
+    padding: 7px 14px;
     font-size: 12px;
     white-space: nowrap;
     flex-shrink: 0;
+    border-radius: 20px;
   }
 
-  /* Cards de post mais compactos */
-  .post-card { border-radius: 12px; }
-  .vote-col  { min-width: 38px; padding: 8px 6px; }
-  .post-body { padding: 10px 12px; }
-  .post-title { font-size: 14px; }
-  .post-text  { font-size: 12px; }
+  /* Card ocupa 100% da largura sem overflow */
+  .post-card {
+    border-radius: 12px;
+    width: 100%;
+    overflow: hidden;
+  }
 
-  /* Imagens e vídeos menores */
-  .post-img-real { max-height: 220px; }
-  .video-thumb   { height: 180px; }
+  /* Coluna de votos mais estreita */
+  .vote-col {
+    min-width: 36px;
+    padding: 10px 4px;
+    font-size: 12px;
+  }
+  .vote-count { font-size: 11px; }
+  .vote-btn   { font-size: 14px; }
+
+  /* Corpo do post com padding menor */
+  .post-body { padding: 10px 10px; min-width: 0; }
+
+  /* Título menor e sem overflow */
+  .post-title {
+    font-size: 14px;
+    word-break: break-word;
+  }
+
+  /* Texto menor */
+  .post-text { font-size: 12px; -webkit-line-clamp: 2; line-clamp: 2; }
+
+  /* Imagem proporcional e contida */
+  .post-img-real {
+    max-height: 200px;
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  /* Vídeo menor */
+  .video-thumb { height: 160px; }
 
   /* Tags menores */
-  .tag { font-size: 10px; padding: 2px 8px; }
+  .tags { gap: 4px; margin-bottom: 8px; }
+  .tag  { font-size: 10px; padding: 2px 7px; }
 
-  /* Like/dislike e reações em linha */
-  .interacoes-wrap { gap: 6px; }
+  /* Meta do post menor */
+  .post-meta { font-size: 10px; gap: 4px; }
+  .avatar-sm { width: 18px; height: 18px; font-size: 9px; }
+
+  /* Like/dislike e reações */
+  .interacoes-wrap { gap: 5px; margin-bottom: 6px; }
   .btn-like,
-  .btn-dislike { padding: 3px 10px; font-size: 12px; }
-  .btn-reagir  { padding: 3px 10px; font-size: 12px; }
+  .btn-dislike { padding: 3px 8px; font-size: 11px; gap: 3px; }
+  .btn-reagir  { padding: 3px 8px; font-size: 11px; }
 
-  /* Botões de ação menores */
-  .action-btn { font-size: 11px; padding: 4px 8px; }
+  /* Ações do post */
+  .post-actions { gap: 2px; margin-top: 4px; }
+  .action-btn   { font-size: 11px; padding: 4px 7px; }
 
-  /* Modal ocupa a tela toda no mobile */
-  .modal-overlay { padding: 10px; align-items: flex-end; }
+  /* Modal ocupa tela toda por baixo (sheet) */
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
   .modal-box {
-    border-radius: 16px 16px 0 0;
-    padding: 24px 18px;
+    border-radius: 20px 20px 0 0;
+    padding: 20px 16px 30px;
     max-width: 100%;
-    max-height: 90vh;
+    max-height: 92vh;
     overflow-y: auto;
+    width: 100%;
   }
 
-  /* Notif bar menor */
-  .notif-bar { font-size: 11px; padding: 6px 12px; }
+  /* Notif bar compacta */
+  .notif-bar {
+    font-size: 11px;
+    padding: 6px 10px;
+    text-align: left;
+  }
+
+  /* Barra de categoria */
+  .categoria-label { font-size: 15px; margin-bottom: 10px; }
 }
