@@ -1024,6 +1024,9 @@ nav a.active { color: #fff; background: var(--accent); }
 /* ══════════════════════════════════════════════
    MOBILE — ajustes para telas pequenas
 ══════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   MOBILE — ajustes para telas pequenas
+══════════════════════════════════════════════ */
 @media (max-width: 600px) {
 
   /* Header em duas linhas */
