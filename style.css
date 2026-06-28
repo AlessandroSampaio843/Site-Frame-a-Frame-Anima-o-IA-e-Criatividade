@@ -1,45 +1,34 @@
 /* ══════════════════════════════════════════════
-   FRAME A FRAME — style.css
-   Organização:
-   1. Variáveis globais (cores, fontes, tamanhos)
-   2. Reset e base
-   3. Barra de notificação
-   4. Header
-   5. Layout principal (grid de 3 colunas)
-   6. Sidebar esquerda
-   7. Feed central (tabs, post cards, votos, etc.)
-   8. Sidebar direita (widgets)
-   9. Modais (auth e post)
-   10. Comentários e reações
-   11. Responsividade
+   FRAME A FRAME — estilo.css
+   Paleta: #F2E9E1 (bege) · #A55DBB (roxo) · #8DC2B7 (verde água)
 ══════════════════════════════════════════════ */
 
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
 
-/* ── 1. VARIÁVEIS GLOBAIS ──────────────────── */
+/* ── VARIÁVEIS DE COR ─────────────────────────
+   Toda cor do site passa por aqui.
+   Mudar aqui muda em todo o site automaticamente. */
 :root {
-  --bg:       #0f0f14;   /* fundo geral da página */
-  --surface:  #1a1a24;   /* superfícies secundárias (header, vote col) */
-  --card:     #22222f;   /* fundo dos cards de post e widgets */
-  --border:   #2e2e42;   /* bordas e divisores */
-  --accent:   #b44dff;   /* cor principal (roxo vibrante) */
-  --accent2:  #7b2fff;   /* variante mais escura do roxo */
-  --gold:     #f5c842;   /* cor dourada para destaques */
-  --green:    #3ddc84;   /* cor verde para indicadores positivos */
-  --text:     #e8e8f0;   /* texto principal */
-  --muted:    #8888a8;   /* texto secundário / menos importante */
-  --tag-bg:   #2a1a40;   /* fundo das tags */
-  --tag-text: #c980ff;   /* texto das tags */
-  --radius:   10px;      /* borda arredondada padrão */
+  --bg:       #F2E9E1;   /* fundo geral — bege claro */
+  --surface:  #EDE0D4;   /* superfícies secundárias — bege um pouco mais escuro */
+  --card:     #FFFFFF;   /* fundo dos cards — branco puro */
+  --border:   #D9C9BA;   /* bordas e divisores — bege médio */
+  --accent:   #A55DBB;   /* cor principal — roxo */
+  --accent2:  #7B3FA0;   /* roxo mais escuro para gradientes */
+  --teal:     #8DC2B7;   /* verde água — cor secundária */
+  --teal2:    #5FA89B;   /* verde água mais escuro */
+  --gold:     #C17E2A;   /* dourado para destaques */
+  --green:    #3A8A6E;   /* verde para tags positivas */
+  --text:     #2A1F2D;   /* texto principal — quase preto com tom roxo */
+  --muted:    #7A6B7D;   /* texto secundário — roxo acinzentado */
+  --tag-bg:   #EDD5F5;   /* fundo das tags — lilás claro */
+  --tag-text: #7B3FA0;   /* texto das tags — roxo escuro */
+  --radius:   10px;
 }
 
-
-/* ── 2. RESET E BASE ──────────────────────── */
-/* Remove margin/padding padrão do navegador e garante box-sizing consistente */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* ── RESET BASE ───────────────────────────────
+   Remove margens e paddings padrão do navegador */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   background: var(--bg);
@@ -49,11 +38,11 @@ body {
   min-height: 100vh;
 }
 
-
-/* ── 3. BARRA DE NOTIFICAÇÃO ──────────────── */
-/* Faixa roxa no topo com mensagem de boas-vindas */
+/* ── BARRA DE NOTIFICAÇÃO ─────────────────────
+   Faixa colorida no topo com mensagem de boas-vindas */
 .notif-bar {
   background: linear-gradient(90deg, var(--accent2), var(--accent));
+  color: #fff;
   text-align: center;
   padding: 8px 20px;
   font-size: 13px;
@@ -63,7 +52,6 @@ body {
   justify-content: center;
   gap: 10px;
 }
-/* Botão ✕ para fechar a barra */
 .notif-close {
   margin-left: auto;
   cursor: pointer;
@@ -76,23 +64,23 @@ body {
 }
 .notif-close:hover { opacity: 1; }
 
-
-/* ── 4. HEADER ────────────────────────────── */
-/* Barra de navegação fixa no topo */
+/* ── HEADER ───────────────────────────────────
+   Barra de navegação fixa no topo da página */
 header {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  position: sticky; /* fica fixo ao rolar */
+  background: var(--card);
+  border-bottom: 2px solid var(--border);
+  position: sticky;
   top: 0;
-  z-index: 100; /* fica acima do conteúdo */
-  height: 52px;
+  z-index: 100;
+  height: 56px;
   display: flex;
   align-items: center;
   padding: 0 20px;
   gap: 20px;
+  box-shadow: 0 2px 12px rgba(165,93,187,.08);
 }
 
-/* Logo: ícone + nome do site */
+/* Logo — ícone + nome do site */
 .logo {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
@@ -104,15 +92,14 @@ header {
   gap: 8px;
   text-decoration: none;
 }
-/* Quadradinho roxo com o emoji do logo */
 .logo-icon {
-  width: 30px; height: 30px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--accent), var(--teal));
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 15px;
 }
 .logo span { color: var(--accent); }
 
@@ -120,11 +107,11 @@ header {
 nav {
   display: flex;
   gap: 4px;
-  flex: 1; /* ocupa o espaço disponível entre logo e busca */
-  overflow-x: auto; /* scroll horizontal em telas pequenas */
-  scrollbar-width: none; /* esconde scrollbar no Firefox */
+  flex: 1;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
-nav::-webkit-scrollbar { display: none; } /* esconde scrollbar no Chrome */
+nav::-webkit-scrollbar { display: none; }
 
 nav a {
   color: var(--muted);
@@ -136,66 +123,58 @@ nav a {
   white-space: nowrap;
   transition: all .15s;
 }
-nav a:hover { color: var(--text); background: var(--card); }
-/* Link ativo (página atual) */
-nav a.active { color: var(--accent); background: var(--tag-bg); }
+nav a:hover  { color: var(--accent); background: var(--tag-bg); }
+nav a.active { color: #fff; background: var(--accent); }
 
-/* Campo de busca com ícone de lupa */
+/* Campo de busca */
 .search-wrap {
   position: relative;
   display: flex;
   align-items: center;
 }
-/* Posiciona o SVG da lupa dentro do input */
 .search-wrap svg {
-  position: absolute;
-  left: 10px;
+  position: absolute; left: 10px;
   color: var(--muted);
-  pointer-events: none; /* não bloqueia cliques no input */
+  pointer-events: none;
 }
 #search {
-  background: var(--card);
-  border: 1px solid var(--border);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
   border-radius: 20px;
   color: var(--text);
   font-size: 13px;
-  padding: 7px 12px 7px 34px; /* espaço à esquerda para a lupa */
+  padding: 7px 12px 7px 34px;
   width: 220px;
   outline: none;
   transition: border-color .15s, width .2s;
 }
-/* Ao focar, borda roxa e input mais largo */
 #search:focus { border-color: var(--accent); width: 280px; }
 #search::placeholder { color: var(--muted); }
 
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+.header-right { display: flex; align-items: center; gap: 10px; }
 
-/* Botão "Entrar" — borda sutil, fundo transparente */
+/* Botão "Entrar" */
 .btn-login {
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--accent);
   background: transparent;
-  color: var(--text);
+  color: var(--accent);
   font-size: 13px;
-  font-weight: 500;
-  padding: 6px 14px;
+  font-weight: 600;
+  padding: 6px 16px;
   border-radius: 20px;
   cursor: pointer;
   transition: all .15s;
   font-family: 'Inter', sans-serif;
 }
-.btn-login:hover { border-color: var(--accent); color: var(--accent); }
+.btn-login:hover { background: var(--accent); color: #fff; }
 
-/* Botão "+ Postar" — fundo roxo sólido */
+/* Botão "+ Postar" */
 .btn-post {
   background: var(--accent);
   color: #fff;
   font-size: 13px;
-  font-weight: 600;
-  padding: 6px 16px;
+  font-weight: 700;
+  padding: 6px 18px;
   border-radius: 20px;
   border: none;
   cursor: pointer;
@@ -204,9 +183,8 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 }
 .btn-post:hover { opacity: .85; }
 
-
-/* ── 5. LAYOUT PRINCIPAL ──────────────────── */
-/* Grade de 3 colunas: sidebar | feed | sidebar */
+/* ── LAYOUT PRINCIPAL ─────────────────────────
+   Grade de 3 colunas: sidebar | feed | sidebar */
 .layout {
   max-width: 1240px;
   margin: 0 auto;
@@ -214,30 +192,30 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   display: grid;
   grid-template-columns: 200px 1fr 300px;
   gap: 20px;
-  align-items: start; /* sidebars não esticam até o fim */
+  align-items: start;
 }
 
-
-/* ── 6. SIDEBAR ESQUERDA ──────────────────── */
+/* ── SIDEBAR ESQUERDA ─────────────────────────
+   Navegação lateral fixa enquanto o usuário rola */
 .sidebar-left {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  position: sticky; /* fica fixo ao rolar */
-  top: 72px; /* abaixo do header */
+  gap: 4px;
+  position: sticky;
+  top: 72px;
 }
 
-/* Rótulo de seção (FEEDS, CATEGORIAS, etc.) */
+/* Rótulo de seção (FEEDS, CATEGORIAS...) */
 .sidebar-section-label {
   font-size: 10px;
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--muted);
-  padding: 10px 10px 4px;
+  padding: 12px 10px 4px;
 }
 
-/* Item de link da sidebar */
+/* Link individual da sidebar */
 .sidebar-link {
   display: flex;
   align-items: center;
@@ -251,17 +229,15 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   transition: all .15s;
   cursor: pointer;
 }
-.sidebar-link:hover { background: var(--card); color: var(--text); }
-.sidebar-link.active { background: var(--tag-bg); color: var(--accent); }
-.sidebar-link .icon { font-size: 16px; width: 20px; text-align: center; }
+.sidebar-link:hover  { background: var(--tag-bg); color: var(--accent); }
+.sidebar-link.active { background: var(--accent); color: #fff; }
+.sidebar-link .icon  { font-size: 16px; width: 20px; text-align: center; }
 
-
-/* ── 7. FEED CENTRAL ──────────────────────── */
-
-/* Abas de ordenação (Em Alta / Novos / Melhores / Comunidade) */
+/* ── TABS DO FEED ─────────────────────────────
+   Botões de ordenação: Em Alta / Novos / Melhores / Comunidade */
 .feed-tabs {
   display: flex;
-  gap: 4px;
+  gap: 6px;
   margin-bottom: 16px;
 }
 .tab {
@@ -269,30 +245,44 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   font-weight: 600;
   padding: 7px 18px;
   border-radius: 20px;
-  border: none;
+  border: 1.5px solid var(--border);
   cursor: pointer;
   font-family: 'Inter', sans-serif;
   transition: all .15s;
   background: var(--card);
   color: var(--muted);
 }
-.tab:hover { color: var(--text); }
-.tab.active { background: var(--accent); color: #fff; }
+.tab:hover  { border-color: var(--accent); color: var(--accent); }
+.tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-/* Card de post individual */
+/* Label da categoria ativa no feed */
+.categoria-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--accent);
+}
+
+/* ── POST CARD ────────────────────────────────
+   Card individual de cada postagem no feed */
 .post-card {
   background: var(--card);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: var(--radius);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   display: flex;
   overflow: hidden;
-  transition: border-color .15s;
+  transition: border-color .15s, box-shadow .15s;
 }
-/* Borda roxa ao passar o mouse */
-.post-card:hover { border-color: var(--accent); }
+.post-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px rgba(165,93,187,.1);
+}
 
-/* Coluna de votos (▲ número ▼) à esquerda do post */
+/* Coluna de votos (▲ número ▼) */
 .vote-col {
   display: flex;
   flex-direction: column;
@@ -300,7 +290,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   gap: 2px;
   padding: 10px 8px;
   background: var(--surface);
-  min-width: 44px;
+  min-width: 48px;
 }
 .vote-btn {
   background: none;
@@ -315,7 +305,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 }
 .vote-btn:hover { background: var(--border); }
 .vote-btn.up:hover   { color: var(--accent); }
-.vote-btn.down:hover { color: #f55; }
+.vote-btn.down:hover { color: #e05555; }
 .vote-count {
   font-size: 12px;
   font-weight: 700;
@@ -323,14 +313,14 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   transition: color .2s;
 }
 
-/* Corpo do post (título, texto, ações) */
+/* Corpo do post */
 .post-body {
   flex: 1;
-  padding: 12px 14px;
-  min-width: 0; /* evita estouro de conteúdo */
+  padding: 12px 16px;
+  min-width: 0;
 }
 
-/* Linha com comunidade, autor e tempo */
+/* Linha de metadados: comunidade · autor · tempo */
 .post-meta {
   font-size: 11px;
   color: var(--muted);
@@ -340,7 +330,6 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   gap: 6px;
   flex-wrap: wrap;
 }
-/* Nome da comunidade clicável */
 .post-meta .community {
   color: var(--accent);
   font-weight: 600;
@@ -348,19 +337,20 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 }
 .post-meta .community:hover { text-decoration: underline; }
 
-/* Avatar circular pequeno do autor */
+/* Avatar circular do autor */
 .avatar-sm {
-  width: 20px; height: 20px;
+  width: 22px; height: 22px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: 10px;
   font-weight: 700;
+  color: #fff;
   flex-shrink: 0;
 }
 
-/* Título principal do post */
+/* Título do post */
 .post-title {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 16px;
@@ -373,37 +363,31 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 }
 .post-title:hover { color: var(--accent); }
 
-/* Descrição/texto do post — limitado a 3 linhas */
+/* Texto/descrição do post */
 .post-text {
   font-size: 13px;
   color: var(--muted);
-  line-height: 1.55;
+  line-height: 1.6;
   margin-bottom: 10px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
-  line-clamp: 3;  /* máximo 3 linhas visíveis */
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* Placeholder de imagem (quando não há imagem real) */
-.post-image-placeholder {
+/* Imagem real do post (URL do Unsplash) */
+.post-img-real {
   width: 100%;
-  height: 200px;
-  background: linear-gradient(135deg, #1a1a30, #2a1a40);
-  border-radius: 6px;
+  max-height: 360px;
+  object-fit: cover;
+  border-radius: 8px;
   margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--muted);
-  font-size: 13px;
-  border: 1px solid var(--border);
-  flex-direction: column;
-  gap: 8px;
+  border: 1.5px solid var(--border);
+  display: block;
 }
 
-/* Tags coloridas (Blender, OC, Destaque, etc.) */
+/* Tags coloridas */
 .tags {
   display: flex;
   gap: 6px;
@@ -420,19 +404,176 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   cursor: pointer;
   transition: all .12s;
 }
-.tag:hover { background: var(--accent); color: #fff; }
-/* Variante verde (ex: OC, Iniciante) */
-.tag.green { background: #0f2a1a; color: var(--green); }
-/* Variante dourada (ex: Destaque, Análise) */
-.tag.gold  { background: #2a200a; color: var(--gold); }
+.tag:hover  { background: var(--accent); color: #fff; }
+.tag.green  { background: #D4EDE5; color: var(--green); }
+.tag.gold   { background: #F5E6CC; color: var(--gold); }
+.tag.teal   { background: #D4EDEA; color: var(--teal2); }
 
-/* Botões de ação abaixo do post */
+/* Miniatura de vídeo com botão de play */
+.video-thumb {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--surface);
+  background-size: cover;
+  background-position: center;
+}
+/* Overlay escuro sobre o thumbnail do vídeo */
+.video-thumb::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,.35);
+}
+/* Círculo com triângulo de play */
+.play-btn {
+  position: relative;
+  width: 56px; height: 56px;
+  background: rgba(165,93,187,.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .15s, background .15s;
+  box-shadow: 0 4px 16px rgba(0,0,0,.3);
+}
+.video-thumb:hover .play-btn { transform: scale(1.1); background: var(--accent); }
+.play-btn::after {
+  content: '';
+  border: 10px solid transparent;
+  border-left: 18px solid #fff;
+  margin-left: 5px;
+}
+
+/* ── INTERAÇÕES (like, dislike, reações) ──────
+   Área abaixo do post com botões de reação */
+.interacoes-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+/* Wrapper dos botões like e dislike */
+.like-dislike-wrap { display: flex; gap: 6px; }
+
+/* Botão 👍 like */
+.btn-like {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all .15s;
+}
+.btn-like:hover { border-color: var(--green); color: var(--green); background: #D4EDE5; }
+
+/* Botão 👎 dislike */
+.btn-dislike {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all .15s;
+}
+.btn-dislike:hover { border-color: #e05555; color: #e05555; background: #FDECEA; }
+
+/* Botão de reagir com emoji */
+.btn-reagir {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all .15s;
+  position: relative;
+}
+.btn-reagir:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Picker flutuante de emojis */
+.emoji-picker {
+  display: none;
+  position: absolute;
+  bottom: 42px; left: 0;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 30px;
+  padding: 8px 12px;
+  gap: 6px;
+  z-index: 50;
+  box-shadow: 0 8px 30px rgba(0,0,0,.12);
+  white-space: nowrap;
+}
+.emoji-picker.aberto { display: flex; }
+
+/* Emoji individual no picker */
+.emoji-opt {
+  font-size: 22px;
+  cursor: pointer;
+  transition: transform .15s;
+  border-radius: 50%;
+  padding: 2px;
+  background: none;
+  border: none;
+  line-height: 1;
+}
+.emoji-opt:hover { transform: scale(1.4); }
+
+/* Bolha de reação já escolhida */
+.reacao-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--tag-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .15s;
+  user-select: none;
+}
+.reacao-bubble:hover { border-color: var(--accent); }
+/* Bolha ativa (usuário já reagiu com esse emoji) */
+.reacao-bubble.ativa {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.reacao-bubble .contagem { font-size: 12px; font-weight: 600; }
+
+/* Botões de ação do post */
 .post-actions {
   display: flex;
   gap: 4px;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: 8px;
 }
 .action-btn {
   background: none;
@@ -449,156 +590,33 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   transition: all .12s;
   font-family: 'Inter', sans-serif;
 }
-.action-btn:hover { background: var(--border); color: var(--text); }
+.action-btn:hover { background: var(--tag-bg); color: var(--accent); }
 
-/* Miniatura de vídeo com botão de play */
-.video-thumb {
-  position: relative;
-  width: 100%;
-  height: 200px;
-  border-radius: 6px;
-  margin-bottom: 10px;
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  cursor: pointer;
-}
-/* Fundo escuro gradiente do vídeo */
-.video-thumb::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, #1a0a2e, #0a0a1a);
-}
-/* Círculo roxo com triângulo de play */
-.play-btn {
-  position: relative;
-  width: 52px; height: 52px;
-  background: rgba(180,77,255,.85);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform .15s, background .15s;
-}
-.video-thumb:hover .play-btn { transform: scale(1.1); background: var(--accent); }
-/* Triângulo do play usando border trick */
-.play-btn::after {
-  content: '';
-  border: 10px solid transparent;
-  border-left: 18px solid #fff;
-  margin-left: 4px;
-}
-
-/* Área de reações (emojis estilo Facebook) */
-.reacoes-wrap {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-bottom: 8px;
-  min-height: 32px;
-}
-
-/* Botão de adicionar reação (fica oculto e aparece no hover do post) */
-.btn-reagir {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 12px;
-  padding: 4px 10px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  transition: all .15s;
-  position: relative;
-}
-.btn-reagir:hover { border-color: var(--accent); color: var(--accent); }
-
-/* Balão flutuante com os emojis disponíveis */
-.emoji-picker {
-  display: none; /* aparece via JS ao clicar */
-  position: absolute;
-  bottom: 38px;
-  left: 0;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 30px;
-  padding: 6px 10px;
-  gap: 6px;
-  z-index: 50;
-  box-shadow: 0 4px 20px rgba(0,0,0,.4);
-  white-space: nowrap;
-}
-.emoji-picker.aberto { display: flex; }
-
-/* Cada emoji individual dentro do picker */
-.emoji-opt {
-  font-size: 22px;
-  cursor: pointer;
-  transition: transform .15s;
-  border-radius: 50%;
-  padding: 2px;
-  background: none;
-  border: none;
-  line-height: 1;
-}
-.emoji-opt:hover { transform: scale(1.4); }
-
-/* Bolha mostrando a reação já escolhida + contador */
-.reacao-bubble {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: var(--tag-bg);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 3px 10px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all .15s;
-  user-select: none;
-}
-.reacao-bubble:hover { border-color: var(--accent); }
-/* Quando o usuário já reagiu com esse emoji */
-.reacao-bubble.ativa {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-}
-.reacao-bubble .contagem {
-  font-size: 12px;
-  font-weight: 600;
-}
-
-/* ── SEÇÃO DE COMENTÁRIOS ──────────────────── */
-/* Aparece abaixo do post ao clicar em "comentários" */
+/* ── SEÇÃO DE COMENTÁRIOS ─────────────────────
+   Aparece ao clicar em "comentários" no post */
 .secao-comentarios {
-  margin-top: 12px;
-  border-top: 1px solid var(--border);
-  padding-top: 12px;
-  animation: slideDown .2s ease; /* animação de entrada */
+  margin-top: 14px;
+  border-top: 1.5px solid var(--border);
+  padding-top: 14px;
+  animation: slideDown .2s ease;
 }
 
-/* Animação de deslizar para baixo */
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Área de escrever novo comentário */
+/* Área de escrever comentário */
 .comentario-input-wrap {
   display: flex;
   gap: 8px;
   margin-bottom: 12px;
   align-items: flex-start;
 }
-/* Textarea do comentário */
 .comentario-textarea {
   flex: 1;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: 8px;
   color: var(--text);
   font-family: 'Inter', sans-serif;
@@ -612,7 +630,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 .comentario-textarea:focus { border-color: var(--accent); }
 .comentario-textarea::placeholder { color: var(--muted); }
 
-/* Botão de enviar o comentário */
+/* Botão de enviar comentário */
 .btn-enviar-comentario {
   background: var(--accent);
   color: #fff;
@@ -624,22 +642,21 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   cursor: pointer;
   font-family: 'Inter', sans-serif;
   transition: opacity .15s;
-  white-space: nowrap;
 }
 .btn-enviar-comentario:hover { opacity: .85; }
 
-/* Card individual de um comentário */
+/* Card de comentário individual */
 .comentario-card {
   display: flex;
   gap: 10px;
   margin-bottom: 10px;
   animation: slideDown .2s ease;
 }
-/* Avatar do autor do comentário */
 .comentario-avatar {
   width: 28px; height: 28px;
   border-radius: 50%;
-  background: var(--accent2);
+  background: var(--accent);
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -652,61 +669,58 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   background: var(--surface);
   border-radius: 8px;
   padding: 8px 12px;
+  border: 1px solid var(--border);
 }
-/* Nome do autor do comentário */
 .comentario-autor {
   font-size: 12px;
   font-weight: 700;
   color: var(--accent);
   margin-bottom: 3px;
 }
-/* Texto do comentário */
 .comentario-texto {
   font-size: 13px;
   color: var(--text);
   line-height: 1.5;
 }
-/* Aviso de comentário filtrado */
+/* Aviso quando o comentário foi filtrado */
 .comentario-aviso {
   font-size: 11px;
   color: var(--gold);
   margin-top: 4px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
 }
 
-
-/* ── 8. SIDEBAR DIREITA (WIDGETS) ─────────── */
+/* ── SIDEBAR DIREITA (WIDGETS) ────────────────
+   Informações sobre a comunidade, destaques e notícias */
 .sidebar-right {
   display: flex;
   flex-direction: column;
   gap: 14px;
   position: sticky;
-  top: 72px; /* abaixo do header */
+  top: 72px;
 }
 
 /* Container genérico de widget */
 .widget {
   background: var(--card);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
 }
-/* Cabeçalho do widget com título */
 .widget-header {
   padding: 12px 14px;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 13px;
   font-weight: 700;
   color: var(--text);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1.5px solid var(--border);
+  background: var(--surface);
 }
 
-/* Faixa colorida decorativa no topo do widget de comunidade */
+/* Faixa colorida do widget de comunidade */
 .community-banner {
-  height: 60px;
-  background: linear-gradient(135deg, var(--accent2), var(--accent), #ff6ef5);
+  height: 64px;
+  background: linear-gradient(135deg, var(--accent2), var(--accent), var(--teal));
 }
 .community-body { padding: 14px; }
 .community-body h3 {
@@ -714,6 +728,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 4px;
+  color: var(--text);
 }
 .community-body p {
   font-size: 12px;
@@ -721,20 +736,16 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   line-height: 1.5;
   margin-bottom: 12px;
 }
-.community-stats { display: flex; gap: 16px; margin-bottom: 14px; }
+.community-stats { display: flex; gap: 20px; margin-bottom: 14px; }
 .stat { text-align: center; }
-.stat-val {
-  font-size: 16px;
-  font-weight: 700;
-  font-family: 'Space Grotesk', sans-serif;
-}
+.stat-val { font-size: 16px; font-weight: 700; font-family: 'Space Grotesk', sans-serif; color: var(--text); }
 .stat-label { font-size: 11px; color: var(--muted); }
 
 /* Ponto verde "online agora" */
 .dot-online {
   display: inline-block;
   width: 8px; height: 8px;
-  background: var(--green);
+  background: var(--teal);
   border-radius: 50%;
   margin-right: 4px;
 }
@@ -746,7 +757,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   color: #fff;
   border: none;
   border-radius: 20px;
-  padding: 8px;
+  padding: 9px;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
@@ -755,7 +766,7 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 }
 .btn-join:hover { opacity: .85; }
 
-/* Cards de posts em destaque na sidebar */
+/* Cards em destaque */
 .featured-card {
   display: flex;
   align-items: center;
@@ -767,7 +778,6 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
 }
 .featured-card:last-child { border-bottom: none; }
 .featured-card:hover { background: var(--surface); }
-/* Número de ranking (1, 2, 3...) */
 .feat-rank {
   font-size: 18px;
   font-weight: 800;
@@ -777,11 +787,10 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   text-align: center;
   flex-shrink: 0;
 }
-/* Miniatura do post em destaque */
 .feat-thumb {
   width: 48px; height: 36px;
   border-radius: 4px;
-  background: var(--surface);
+  background: var(--tag-bg);
   border: 1px solid var(--border);
   flex-shrink: 0;
   display: flex;
@@ -795,23 +804,17 @@ nav a.active { color: var(--accent); background: var(--tag-bg); }
   font-weight: 600;
   color: var(--text);
   display: -webkit-box;
-  -webkit-line-clamp: 3;
-line-clamp: 3;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: 1.3;
   margin-bottom: 2px;
 }
-.feat-meta { font-size: 11px; color: var(--muted); }
-.feat-votes {
-  font-size: 11px;
-  color: var(--accent);
-  font-weight: 600;
-  margin-left: auto;
-  flex-shrink: 0;
-}
+.feat-meta  { font-size: 11px; color: var(--muted); }
+.feat-votes { font-size: 11px; color: var(--accent); font-weight: 600; margin-left: auto; flex-shrink: 0; }
 
-/* Itens de notícia na sidebar */
+/* Itens de notícia */
 .news-item {
   display: flex;
   gap: 10px;
@@ -823,7 +826,6 @@ line-clamp: 3;
 }
 .news-item:last-child { border-bottom: none; }
 .news-item:hover { background: var(--surface); }
-/* Número grande decorativo */
 .news-num {
   font-size: 20px;
   font-weight: 800;
@@ -835,35 +837,31 @@ line-clamp: 3;
 .news-title { font-size: 12px; font-weight: 500; color: var(--text); line-height: 1.4; }
 .news-sub   { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-/* Corpo das regras da comunidade */
+/* Regras da comunidade */
 .rules-body {
   padding: 12px 14px;
   font-size: 12px;
   color: var(--muted);
-  line-height: 2;
+  line-height: 2.2;
 }
 .rules-body strong { color: var(--text); }
 
-
-/* ── 9. MODAIS ────────────────────────────── */
-
-/* Fundo escuro semitransparente atrás do modal */
+/* ── MODAIS ───────────────────────────────────
+   Janelas que aparecem sobre o conteúdo */
 .modal-overlay {
   position: fixed; inset: 0;
-  background: rgba(0,0,0,.7);
+  background: rgba(42,31,45,.5);
   z-index: 200;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
   transition: opacity .2s;
-  backdrop-filter: blur(4px); /* desfoque do fundo */
+  backdrop-filter: blur(6px);
 }
-
-/* Caixa branca/escura do modal */
 .modal-box {
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--card);
+  border: 1.5px solid var(--border);
   border-radius: 16px;
   padding: 32px 28px;
   width: 100%;
@@ -872,9 +870,8 @@ line-clamp: 3;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.15);
 }
-
-/* Botão ✕ para fechar o modal */
 .modal-close {
   position: absolute;
   top: 14px; right: 16px;
@@ -883,18 +880,10 @@ line-clamp: 3;
   color: var(--muted);
   font-size: 18px;
   cursor: pointer;
-  line-height: 1;
   transition: color .15s;
 }
 .modal-close:hover { color: var(--text); }
-
-/* Emoji/ícone grande no topo do modal */
-.modal-logo {
-  font-size: 40px;
-  text-align: center;
-}
-
-/* Título principal do modal */
+.modal-logo  { font-size: 40px; text-align: center; }
 .modal-title {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 22px;
@@ -902,13 +891,7 @@ line-clamp: 3;
   text-align: center;
   color: var(--text);
 }
-
-/* Subtítulo/descrição do modal */
-.modal-sub {
-  font-size: 13px;
-  color: var(--muted);
-  text-align: center;
-}
+.modal-sub { font-size: 13px; color: var(--muted); text-align: center; }
 
 /* Botão de login com Google */
 .btn-google {
@@ -918,18 +901,18 @@ line-clamp: 3;
   gap: 10px;
   background: #fff;
   color: #333;
-  border: none;
+  border: 1.5px solid var(--border);
   border-radius: 8px;
   padding: 11px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
-  transition: opacity .15s;
+  transition: border-color .15s;
 }
-.btn-google:hover { opacity: .9; }
+.btn-google:hover { border-color: var(--accent); }
 
-/* Linha divisória "ou" entre Google e email */
+/* Divisor "ou" */
 .modal-divider {
   display: flex;
   align-items: center;
@@ -939,17 +922,16 @@ line-clamp: 3;
 }
 .modal-divider::before,
 .modal-divider::after {
-  content: '';
-  flex: 1;
+  content: ''; flex: 1;
   height: 1px;
   background: var(--border);
 }
 
-/* Abas "Entrar" / "Criar conta" */
+/* Abas Entrar / Criar conta */
 .auth-tabs {
   display: flex;
   gap: 4px;
-  background: var(--card);
+  background: var(--surface);
   padding: 4px;
   border-radius: 8px;
 }
@@ -968,11 +950,11 @@ line-clamp: 3;
 }
 .auth-tab.active { background: var(--accent); color: #fff; }
 
-/* Campos de texto dos formulários */
+/* Campos de input dos formulários */
 .modal-input {
   width: 100%;
-  background: var(--card);
-  border: 1px solid var(--border);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
   border-radius: 8px;
   color: var(--text);
   font-size: 14px;
@@ -983,14 +965,9 @@ line-clamp: 3;
 }
 .modal-input:focus { border-color: var(--accent); }
 .modal-input::placeholder { color: var(--muted); }
+.modal-textarea { resize: vertical; min-height: 80px; }
 
-/* Textarea do modal (mesma aparência do input) */
-.modal-textarea {
-  resize: vertical; /* só redimensiona verticalmente */
-  min-height: 80px;
-}
-
-/* Botão principal de confirmação nos modais */
+/* Botão de confirmar nos modais */
 .btn-confirmar {
   width: 100%;
   background: var(--accent);
@@ -1007,13 +984,13 @@ line-clamp: 3;
 }
 .btn-confirmar:hover { opacity: .85; }
 
-/* Área de upload de imagem (clicável como label) */
+/* Área de upload de imagem */
 .upload-area {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--card);
+  background: var(--surface);
   border: 2px dashed var(--border);
   border-radius: 8px;
   padding: 20px;
@@ -1026,74 +1003,16 @@ line-clamp: 3;
 }
 .upload-area:hover { border-color: var(--accent); color: var(--accent); }
 
-
-/* ── 10. RESPONSIVIDADE ───────────────────── */
-
-/* Tablet: esconde sidebar esquerda, mantém feed + sidebar direita */
+/* ── RESPONSIVIDADE ───────────────────────────
+   Adapta o layout para telas menores */
 @media (max-width: 1000px) {
   .layout { grid-template-columns: 1fr 280px; }
   .sidebar-left { display: none; }
 }
-
-/* Mobile: apenas o feed, ambas sidebars somem */
 @media (max-width: 700px) {
   .layout { grid-template-columns: 1fr; }
   .sidebar-right { display: none; }
   header { gap: 10px; padding: 0 12px; }
   #search { width: 160px; }
   #search:focus { width: 200px; }
-}
-
-/* ── IMAGEM REAL DO POST ── */
-.post-img-real {
-  width: 100%;
-  max-height: 360px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 10px;
-  border: 1px solid var(--border);
-  display: block;
-}
-
-/* ── LIKE / DISLIKE ── */
-.interacoes-wrap {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 8px;
-}
-
-.like-dislike-wrap {
-  display: flex;
-  gap: 6px;
-}
-
-.btn-like, .btn-dislike {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 600;
-  padding: 4px 12px;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  transition: all .15s;
-}
-.btn-like:hover    { border-color: #3ddc84; color: #3ddc84; }
-.btn-dislike:hover { border-color: #ff5555; color: #ff5555; }
-
-/* Label de categoria ativa no feed */
-.categoria-label {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--accent);
 }
