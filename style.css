@@ -1016,3 +1016,95 @@ nav a.active { color: #fff; background: var(--accent); }
   #search { width: 160px; }
   #search:focus { width: 200px; }
 }
+
+/* ══════════════════════════════════════════════
+   MOBILE — ajustes para telas pequenas
+   Tudo abaixo de 600px de largura
+══════════════════════════════════════════════ */
+@media (max-width: 600px) {
+
+  /* Header mais compacto */
+  header {
+    height: auto;
+    padding: 10px 12px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Logo menor */
+  .logo { font-size: 14px; }
+  .logo-icon { width: 26px; height: 26px; font-size: 12px; }
+
+  /* Esconde o menu de navegação no mobile (fica na sidebar) */
+  nav { display: none; }
+
+  /* Busca ocupa a linha toda */
+  .search-wrap { flex: 1; }
+  #search { width: 100% !important; }
+
+  /* Botões do header menores */
+  .btn-login { padding: 5px 12px; font-size: 12px; }
+  .btn-post  { padding: 5px 12px; font-size: 12px; }
+
+  /* Layout vira coluna única */
+  .layout {
+    grid-template-columns: 1fr !important;
+    padding: 12px 10px;
+    gap: 12px;
+  }
+
+  /* Esconde as duas sidebars no mobile */
+  .sidebar-left  { display: none !important; }
+  .sidebar-right { display: none !important; }
+
+  /* Tabs menores e com scroll horizontal */
+  .feed-tabs {
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+    flex-wrap: nowrap;
+  }
+  .feed-tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 6px 14px;
+    font-size: 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Cards de post mais compactos */
+  .post-card { border-radius: 12px; }
+  .vote-col  { min-width: 38px; padding: 8px 6px; }
+  .post-body { padding: 10px 12px; }
+  .post-title { font-size: 14px; }
+  .post-text  { font-size: 12px; }
+
+  /* Imagens e vídeos menores */
+  .post-img-real { max-height: 220px; }
+  .video-thumb   { height: 180px; }
+
+  /* Tags menores */
+  .tag { font-size: 10px; padding: 2px 8px; }
+
+  /* Like/dislike e reações em linha */
+  .interacoes-wrap { gap: 6px; }
+  .btn-like,
+  .btn-dislike { padding: 3px 10px; font-size: 12px; }
+  .btn-reagir  { padding: 3px 10px; font-size: 12px; }
+
+  /* Botões de ação menores */
+  .action-btn { font-size: 11px; padding: 4px 8px; }
+
+  /* Modal ocupa a tela toda no mobile */
+  .modal-overlay { padding: 10px; align-items: flex-end; }
+  .modal-box {
+    border-radius: 16px 16px 0 0;
+    padding: 24px 18px;
+    max-width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  /* Notif bar menor */
+  .notif-bar { font-size: 11px; padding: 6px 12px; }
+}
