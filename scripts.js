@@ -373,6 +373,11 @@ function renderizarPosts(lista) {
 
       <!-- Corpo do post -->
       <div class="post-body">
+        <!-- Visualizações (só aparece no mobile) -->
+         <div class="post-views">
+            👁 ${Math.floor(post.votos * 4.2).toLocaleString('pt-BR')} visualizações · 
+            ▲ ${votosDisplay} votos
+          </div>
         <div class="post-meta">
           <div class="avatar-sm" style="background:${post.avatarCor};">${post.inicial}</div>
           <span class="community">${post.comunidade}</span>
@@ -752,7 +757,3 @@ document.getElementById('btnJoin').addEventListener('click', () => {
 
 // ── INICIALIZAÇÃO ─────────────────────────────────
 renderizarPosts(POSTS);
-
-card.innerHTML = `
-  <!-- Coluna de votos -->
-  <div class="vote-col">
