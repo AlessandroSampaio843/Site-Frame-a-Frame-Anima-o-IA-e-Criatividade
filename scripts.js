@@ -752,3 +752,7 @@ document.getElementById('btnJoin').addEventListener('click', () => {
 
 // ── INICIALIZAÇÃO ─────────────────────────────────
 renderizarPosts(POSTS);
+
+card.innerHTML = `
+  <!-- Coluna de votos -->
+  <div class="vote-col">
